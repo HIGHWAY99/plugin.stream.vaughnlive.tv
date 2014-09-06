@@ -1,3 +1,6 @@
+[B]v0.0.3[/B]
+- Sorting out issues with the extra stream sites handled.
+
 [B]v0.0.2[/B]
 - Thanks to Shani for help figure out how to keep the stream playing, and the Token parsing.
 

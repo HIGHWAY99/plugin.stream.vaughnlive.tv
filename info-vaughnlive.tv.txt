@@ -1,0 +1,284 @@
+http://vaughnlive.tv/
+http://vaughnlive.tv/app/topbar.php?s=vlmisc&dt=1408736838574 ## misc
+http://vaughnlive.tv/app/topbar.php?s=igb&dt=1408737094685 ## games
+http://vaughnlive.tv/app/topbar.php?s=vlbreakers&dt=1408737121377 ## breakers
+http://vaughnlive.tv/app/topbar.php?s=vlmusic&dt=1408737161321 ## music cafes
+http://vaughnlive.tv/app/topbar.php?s=vl&dt=1408737189301 ## all
+
+function getEdgeServers() { return "edge3.video.vaughnsoft.net:443,edge2.video.vaughnsoft.net:443,edge1.video.vaughnsoft.net:443,edge5.video.vaughnsoft.net:443"; }
+
+rtmp://edge3.video.vaughnsoft.net:443/live playpath=docbrown1 live=1
+rtmp://edge3.video.vaughnsoft.net:443/live/docbrown1
+rtmp://edge3.video.vaughnsoft.net:443/live/docbrown1 live=1
+rtmp://edge3.video.vaughnsoft.net:443/docbrown1
+
+rtmp://edge3.video.vaughnsoft.net:443/live playpath=live_docbrown1 ## works, but for only a few seconds.
+
+rtmp://edge3.video.vaughnsoft.net:443/live playpath=live_docbrown1 swfUrl=http://vaughnlive.tv/swf/VaughnLive_v3_2.swf pageUrl=http://vaughnlive.tv/embed/video/docbrown1?viewers=true&watermark=left&autoplay=true
+
+rtmp://67.159.54.98:443/live playpath=live_extremotv2 swfUrl=http://vaughnlive.tv/swf/VaughnLive_v3_2.swf pageUrl=http://vaughnlive.tv/embed/video/extremotv2?viewers=true&watermark=left&autoplay=true
+
+rtmp://edge3.video.vaughnsoft.net:443/live?30dabc4871922a1314192e925ab7961d playpath=live_alientv swfurl=http://vaughnlive.tv/800021294/swf/VaughnSoftPlayer.swf live=true timeout=15 pageurl=http://vaughnlive.tv/embed/video/alientv?viewers=true&watermark=left&autoplay=true
+
+rtmp://edge1.video.vaughnsoft.net:443/live playpath=live_alientv swfurl=http://vaughnlive.tv/swf/VaughnSoftPlayer.swf token=balls2u live=true timeout=15 pageurl=http://vaughnlive.tv/embed/video/alientv?viewers=true&watermark=left&autoplay=true
+
+rtmp://50.7.78.50:443/live?/live_docbrown1
+rtmp://50.7.78.50:443/live? /live_docbrown1
+rtmp://50.7.78.50:443/live?qQ4Whk1g5GeGYUXIY1M2FrcYCasRba1V /live_docbrown1
+rtmp://50.7.78.50:443/live?Sig12ulgXocMj0MP9THlqVO0YCVuXTK8 /live_docbrown1
+
+
+
+
+rtmp://$OPT:rtmp-raw=rtmp://192.240.105.2:443/live?CtXSycNF44rGk4bPqSpCfqf6yKAjH3bi playpath=live_mega_kids swfUrl=http://vaughnlive.tv/800021294/swf/VaughnSoftPlayer.swf live=1 pageUrl=http://vaughnlive.tv/embed/video/mega_kids?viewers=true&watermark=left&autoplay=true
+
+
+rtmp://192.240.105.2:443/live?xPGtIVd7zGLub0bkqmeRqIHFdTG3Ylqp playpath=live_cinemalatinohd01 swfUrl=http://vaughnlive.tv/800021294/swf/VaughnSoftPlayer.swf live=1 pageUrl=http://vaughnlive.tv/embed/video/cinemalatinohd01?viewers=true&watermark=left&autoplay=true Conn=S:OK --live
+
+
+
+        function getEdgeServers() { return "23.227.170.74:443,23.227.170.82:443,50.7.78.50:443,192.240.105.2:443,50.7.78.138:443,192.240.105.42:443"; }
+        var vsVars1409127754 = {};
+        var vsVars14091277544 = {};
+        vsVars1409127754.k1 = "live";
+        vsVars1409127754.k2 = "docbrown1";
+                        vsVars14091277544.lkS0dd2dfe8e8aeb3e9fa6d6999a4ddd921 = "0m037380:0m033600:0m035280:0m047040:0m042840:0m047460:0m037800:0m034020:0m048300:0m047880:0m031500:0m042000:0m030240:0m030240:0m035280:0m034860:0m045780:0m028140:0m036540:0m028980:0m047460:0m032760:0m030660:0m051240:0m042420:0m032760:0m045360:0m036120:0m027720:0m047880:0m046620:0m043260";
+        vsVars1409127754.lkS0dd2dfe8e8aeb3e9fa6d6999a4ddd921 = "0m034860:0m040740:0m036120:0m037800:0m032340:0m048720:0m030660:0m029400:0m036120:0m032760:0m030660:0m050400:0m023940:0m035280:0m036540:0m031080:0m043680:0m031500:0m030660:0m028980:0m047040:0m030660:0m030240:0m042840:0m042420:0m044100:0m027720:0m020580:0m021840:0m037800:0m042840:0m027720"; 
+        vsVars1409127754.t = "1409127754";
+        attributes.id = "vsPlayer";
+        swfobject.embedSWF("/800021294/swf/VaughnSoftPlayer.swf", "MvnPlayerContainer", "720", "431", "9.0.0", "/swf/expressInstall.swf", vsVars1409127754, params, attributes);
+
+
+http://vaughnlive.tv/docbrown1
+rtmp://192.240.105.2:443/live?lkS0dd2dfe8e8aeb3e9fa6d6999a4ddd921 playpath=live_docbrown1 swfUrl=http://vaughnlive.tv/800021294/swf/VaughnSoftPlayer.swf live=1 pageUrl=http://vaughnlive.tv/embed/video/docbrown1?viewers=true&watermark=left&autoplay=true Conn=S:OK --live
+rtmp://23.227.170.74:443/live?lkS0dd2dfe8e8aeb3e9fa6d6999a4ddd921 playpath=live_docbrown1 swfUrl=http://vaughnlive.tv/800021294/swf/VaughnSoftPlayer.swf live=1 pageUrl=http://vaughnlive.tv/embed/video/docbrown1?viewers=true&watermark=left&autoplay=true Conn=S:OK --live
+
+rtmp://23.227.170.74:443/live?lkS0dd2dfe8e8aeb3e9fa6d6999a4ddd921 playpath=live_docbrown1 swfUrl=http://vaughnlive.tv/800021294/swf/VaughnSoftPlayer.swf live=1 pageUrl=http://vaughnlive.tv/embed/video/docbrown1?viewers=true&watermark=left&autoplay=true token= Conn=S:OK --live
+rtmp://23.227.170.74:443/live?lkS0dd2dfe8e8aeb3e9fa6d6999a4ddd921 playpath=live_docbrown1 swfUrl=http://vaughnlive.tv/800021294/swf/VaughnSoftPlayer.swf live=1 pageUrl=http://vaughnlive.tv/embed/video/docbrown1?viewers=true&watermark=left&autoplay=true token=30dabc4871922a1314192e925ab7961d Conn=S:OK --live
+
+
+rtmp:// :443/live? playpath=live_ swfUrl=http://vaughnlive.tv/800021294/swf/VaughnSoftPlayer.swf live=1 pageUrl=http://vaughnlive.tv/embed/video/ ?viewers=true&watermark=left&autoplay=true Conn=S:OK --live
+
+
+rtmp://192.240.105.2:443/live?g0B0O7yUug5WxB6Pf97akRK6Y7l6Q8kd playpath=live_cinemalatinohd swfUrl=http://vaughnlive.tv/800021294/swf/VaughnSoftPlayer.swf live=1 pageUrl=http://vaughnlive.tv/embed/video/cinemalatinohd?viewers=true&watermark=left&autoplay=true token=30dabc4871922a1314192e925ab7961d
+
+rtmp://$OPT:rtmp-raw=rtmp://192.240.105.2:443/live?CtXSycNF44rGk4bPqSpCfqf6yKAjH3bi playpath=live_mega_kids swfUrl=http://vaughnlive.tv/800021294/swf/VaughnSoftPlayer.swf live=1 pageUrl=http://vaughnlive.tv/embed/video/mega_kids?viewers=true&watermark=left&autoplay=true
+
+rtmp:/50.7.78.138:443/live?SaVZMtlFVNlx9TWJhKlEplHfeiB14ZfB/live_docbrown1
+
+
+
+http://vaughnlive.tv/app/loadImg.php?a=profile&u=moviebay
+
+
+http://vaughnlive.tv/app/topbar.php?s=vl&dt=1409701832196
+http://vaughnlive.tv/app/topbar.php?s=vl
+
+http://vaughnlive.tv/app/topbar.php?s=vlmisc&dt=1409700688224
+http://vaughnlive.tv/app/topbar.php?s=vlmisc
+
+ 
+<div class="topbar_img"><a href="http://vaughnlive.tv/crimecentral"><img name="mvnPicTopBar_crimecentral" width="75" height="55" border="0" onerror="mvnImages.profileError('mvnPicTopBar_crimecentral','crimecentral');" class="mvnLive" alt="crimecentral - Live!" title="crimecentral - Live!"/></a></div>
+
+ 
+<div class="topbar_img">
+<a href="http://vaughnlive.tv/crimecentral">
+<img name="mvnPicTopBar_crimecentral" width="75" height="55" border="0" 
+onerror="mvnImages.profileError('mvnPicTopBar_crimecentral','crimecentral');" 
+class="mvnLive" alt="crimecentral - Live!" title="crimecentral - Live!"/></a></div>
+
+http://vaughnlive.tv/favicon.ico
+
+http://cdn.vaughnsoft.com/vaughnsoft/vaughnlive/background/88af179dfd5f5ff6fa18112de425ae1a_0881e55dde1fe2bf8ca6e64e6af432b5_eb18230b3396751603629919d5dbdbe7.jpg
+
+http://vaughnlive.tv/app/topbar.php?s=vlsocial&dt=1409730196483
+
+http://thumbnails.vaughnsoft.com/1409730190/fetch/live/arconai_movies.png
+http://thumbnails.vaughnsoft.com/1409730190/fetch/live/finnhorror.png
+
+http://vaughnlive.tv/browse/misc?a=mvn
+
+<div class="browseBox" onmouseover="primary.browseOver();" onmouseout="primary.browseOut();">
+<div class="browseThumb">
+<a href="/cajunflix1" target="_top"><img src="//thumbnails.vaughnsoft.com/1409730475/fetch/live/cajunflix1.png" class"browseThumb" width="200" height="113" /></a>
+                    <div class="browseTxt" onclick="window.location = '/cajunflix1';">
+                        <a href="/cajunflix1" target="_top" class="browseTxt">cajunflix1</a>
+                    </div>
+                </div>
+            </div>
+                            <div class="browseBoxSpacer"></div>
+                            <div class="browseBox" onmouseover="primary.browseOver();" onmouseout="primary.browseOut();">
+                <div class="browseThumb">
+                    <a href="/arconai_movies" target="_top"><img src="//thumbnails.vaughnsoft.com/1409730475/fetch/live/arconai_movies.png" class"browseThumb" width="200" height="113" /></a>
+                    <div class="browseTxt" onclick="window.location = '/arconai_movies';">
+                        <a href="/arconai_movies" target="_top" class="browseTxt">arconai_movies</a>
+                    </div>
+                </div>
+            </div>
+                            <div class="clear"></div>
+                            <div class="browseBox" onmouseover="primary.browseOver();" onmouseout="primary.browseOut();">
+                <div class="browseThumb">
+                    <a href="/finnhorror" target="_top"><img src="//thumbnails.vaughnsoft.com/1409730475/fetch/live/finnhorror.png" class"browseThumb" width="200" height="113" /></a>
+                    <div class="browseTxt" onclick="window.location = '/finnhorror';">
+                        <a href="/finnhorror" target="_top" class="browseTxt">finnhorror</a>
+                    </div>
+                </div>
+            </div>
+
+
+<div class="browseLeft">
+<div class="browseTab browseTabAccent" id="browseBtnAll" onclick="Browse.All();"><img src="/img/cat_all_white.png" class="cat_img"/> All</div>
+<div class="browseTabLine"></div>
+<div class="browseTab browseTabAccent" id="browseBtnFollowing" onclick="Browse.Following();"><img src="/img/cat_following_white.png" class="cat_img"/> Following</div>
+<div class="browseTabLine"></div>
+<div class="browseTab browseTabAccentSelected" id="browseBtnPeople" onclick="Browse.People();"><img src="/img/cat_people_white.png" class="cat_img"/> People</div>
+<div class="browseTabLine"></div>
+<div class="browseTab browseTabAccent" id="browseBtnNature" onclick="Browse.Nature();"><img src="/img/cat_nature_white.png" class="cat_img"/> Nature</div>
+<div class="browseTabLine"></div>
+<div class="browseTab browseTabAccent" id="browseBtnCreative" onclick="Browse.Creative();"><img src="/img/cat_creative_white.png" class="cat_img"/> Creative</div>
+<div class="browseTabLine"></div>
+<div class="browseTab browseTabAccent" id="browseBtnMusic" onclick="Browse.Music();"><img src="/img/cat_music_white.png" class="cat_img"/> Music Cafe</div>
+<div class="browseTabLine"></div>
+<div class="browseTab browseTabAccent" id="browseBtnNewsTech" onclick="Browse.NewsTech();"><img src="/img/cat_newstech_white.png" class="cat_img"/> News & Tech</div>
+<div class="browseTabLine"></div>
+<div class="browseTab browseTabAccent" id="browseBtnLifestyles" onclick="Browse.Lifestyles();"><img src="/img/cat_lifestyles_white.png" class="cat_img"/> Lifestyles</div>
+<div class="browseTabLine"></div>
+<div class="browseTab browseTabAccent" id="browseBtnMisc" onclick="Browse.Misc();"><img src="/img/cat_misc_white.png" class="cat_img"/> Misc</div>
+<div class="browseTabLine"></div>
+<div class="browseTab browseTabAccent" id="browseBtnEspanol" onclick="Browse.Espanol();"><img src="/img/cat_espanol_white.png" class="cat_img"/> Espanol</div>
+<div class="browseTabLine"></div>
+<div class="browseTab browseTabAccent" id="browseBtnVapers" onclick="Browse.Vapers();"><img src="/img/cat_vapers_white.png" class="cat_img"/> Vapers</div>
+<div class="browseTabLine"></div>
+<div class="browseTab browseTabAccent" id="browseBtnBreakers" onclick="Browse.Breakers();"><img src="/img/cat_breakers_white.png" class="cat_img"/> Breakers</div>
+<div class="browseTabLine"></div>
+<div class="browseTab browseTabAccent" id="browseBtnGamers" onclick="Browse.Gamers();"><img src="/img/cat_gamers_white.png" class="cat_img"/> Gamers</div>
+</div>
+
+http://vaughnlive.tv/img/cat_lifestyles_white.png		# white
+http://vaughnlive.tv/img/cat_lifestyles.png					# black
+
+http://vaughnlive.tv/browse/breakers?a=mvn
+http://thumbnails.vaughnsoft.com/1409733388/fetch/btv/billsboxbreaks.png
+
+http://vaughnlive.tv/browse/vapers?a=mvn
+http://thumbnails.vaughnsoft.com/1409733477/fetch/vtv/nuclearvandalism.png
+
+http://vaughnlive.tv/browse/gamers?a=mvn
+http://thumbnails.vaughnsoft.com/1409733505/fetch/instagib/grumble.png
+
+http://vaughnlive.tv/browse/espanol?a=mvn
+
+http://vaughnlive.tv/browse/music_cafe?a=mvn
+
+http://vaughnlive.tv/browse/creative?a=mvn
+
+http://vaughnlive.tv/browse/following?a=following
+
+
+<div class="browseThumb">
+                    <a href="http://vapers.tv/trovelive" target="_top"><img src="//thumbnails.vaughnsoft.com/1409733787/fetch/vtv/trovelive.png" class"browseThumb" width="200" height="113" /></a>
+                    <div class="browseTxt" onclick="window.location = 'http://vapers.tv/trovelive';">
+                        <a href="http://vapers.tv/trovelive" target="_top" class="browseTxt">trovelive</a>
+                    </div>
+</div>
+</div>
+
+
+
+[2:25:32 PM] Shani Shan: hello all
+[2:33:22 PM] Shani Shan: Let me know HW, if you have issue with vaugnlive, here is the LSPro xml
+[2:34:44 PM | Edited 2:45:56 PM] Shani Shan: 
+<item>
+<title>Vaughn latino v2</title>
+<link>rtmp://$doregex[getserver]/live?$doregex[getdecoded] playpath=live_latinomovies live=1 timeout=20</link>
+<regex>
+<name>getdecoded</name>
+<expres>$pyFunction:decrypt_vaughnlive("$doregex[getencoded]".split(";")[-1])</expres>
+<page></page>
+</regex>
+
+<regex>
+<name>getencoded</name>
+<expres>;(0m0[0-9].*)</expres>
+<page>$doregex[getUrl]</page>
+</regex>
+<regex>
+<name>getserver</name>
+<expres>(.*?);</expres>
+<page>$doregex[getUrl]</page>
+</regex>
+<regex>
+<name>getUrl</name>
+<expres>(.*)</expres>
+<page>http://mvn.vaughnsoft.net/video/edge/live_latinomovies_$doregex[gettime]-$doregex[gettime].33434</page>
+</regex>
+<regex>
+<name>gettime</name>
+<expres>$pyFunction:str(int(round(time.time() * 1000)))</expres>
+<page></page>
+</regex>
+</item>
+[2:37:15 PM | Edited 2:49:53 PM] Shani Shan: here are the uknowns, you have to find the server name, for which load the url for example http://mvn.vaughnsoft.net/video/edge/live_latinomovies_$doregex[gettime]-$doregex[gettime].33434 ($doregex[gettime] is current time in unix format see gettime ) which will give ur server (see getserver). second thing  token, for which in the same url,get the encrypted text which is like 0m0 (see getencoded regex), this will give you encoded token now we have to decode it, first split it with ';' and pick the last one
+[2:38:21 PM] Shani Shan: you have to pass the encoded string to decrypt_vaughnlive function, which is coded as this
+[2:38:36 PM] Shani Shan:         
+def decrypt_vaughnlive(encrypted):
+    retVal=""
+    for val in encrypted.split(':'):
+        retVal+=chr(int(val.replace("0m0",""))/84/5)
+    return retVal
+[2:39:04 PM] Shani Shan: and finally put these two unknows to rtmp string
+[2:40:15 PM] Shani Shan: rtmp://ServerHERE/live?TokenHERE playpath=PlayPathHere live=1 timeout=20
+[2:40:19 PM] Shani Shan: thats it
+[2:45:27 PM | Removed 2:48:57 PM] Shani Shan: This message has been removed.
+[2:50:29 PM] Shani Shan: if i am not around then pm me if you are stuck anywhere
+
+
+        function getEdgeServers() { return "50.7.78.50:443,192.240.105.2:443,50.7.78.138:443,23.227.170.82:443,192.240.105.42:443,23.227.170.74:443"; }
+        var vsVars1409947768 = {};
+        var vsVars14099477684 = {};
+        vsVars1409947768.k1 = "live";
+        vsVars1409947768.k2 = "docbrown1";
+                        vsVars14099477684.tLb06143c1f0725c27f1aba26f259c3f77c = "0m036540:0m042840:0m050400:0m049980:0m050400:0m030660:0m042420:0m027720:0m050820:0m045360:0m035700:0m029820:0m046620:0m048300:0m044100:0m032340:0m049980:0m047040:0m028140:0m051240:0m027300:0m041580:0m028140:0m047880:0m033600:0m028560:0m028980:0m036540:0m033180:0m028980:0m029400";
+        vsVars1409947768.tLb06143c1f0725c27f1aba26f259c3f77c = "0m027300:0m023100:0m044100:0m049980:0m037800:0m048300:0m035700:0m035280:0m041580:0m031920:0m021000:0m044100:0m027300:0m031920:0m046200:0m046620:0m032760:0m034440:0m045780:0m049980:0m027720:0m033600:0m036120:0m046620:0m031080:0m041580:0m044520:0m028560:0m049140:0m044520:0m049140:0m023100"; 
+        vsVars1409947768.t = "1409947768";
+        var params = {};
+
+        function getEdgeServers() { return "23.227.170.74:443,23.227.170.82:443,50.7.78.50:443,192.240.105.2:443,50.7.78.138:443,192.240.105.42:443"; }
+        var vsVars1409948711 = {};
+        var vsVars14099487114 = {};
+        vsVars1409948711.k1 = "live";
+        vsVars1409948711.k2 = "arconai_movies";
+                        vsVars14099487114.XuHb71423bafe826f5609e4fd4d69af504a = "0m030660:0m030660:0m030240:0m049140:0m048720:0m028980:0m044940:0m029400:0m048300:0m033600:0m050820:0m047880:0m048720:0m049560:0m050820:0m034020:0m030240:0m044100:0m031500:0m034860:0m031920:0m037800:0m032340:0m051240:0m036540:0m028140:0m043680:0m032760:0m031500:0m047880:0m032760";
+        vsVars1409948711.XuHb71423bafe826f5609e4fd4d69af504a = "0m020160:0m041160:0m030660:0m033180:0m035700:0m046200:0m040740:0m042000:0m045360:0m050820:0m021420:0m034020:0m037800:0m022680:0m028560:0m037800:0m045360:0m034440:0m037380:0m041160:0m051240:0m034440:0m050820:0m049560:0m032340:0m043680:0m028560:0m028980:0m043680:0m034440:0m033600:0m044940"; 
+        vsVars1409948711.t = "1409948711";
+        var params = {};
+
+vsVars14099487114 .XuHb7 1423b afe82 6f560 9e4fd 4d69a f504a
+vsVars1409948711  .XuHb71423bafe826f5609e4fd4d69af504a
+
+vsVars14099477684 .tLb06143c1f0725c27f1aba26f259c3f77c
+vsVars1409947768  .tLb06143c1f0725c27f1aba26f259c3f77c
+
+http://vaughnlive.tv/app/loadImg.php?a=profile&u=
+
+vaughnlive.tv/api.php?a=bank&u=
+vaughnlive.tv/api.php?a=bank&u=docbrown1
+vaughnlive.tv/api.php?a=profile&u=docbrown1
+vaughnlive.tv/api.php?a=background&u=docbrown1
+vaughnlive.tv/api.php?a=live&u=docbrown1
+
+rtmp://live.vaughnlive.tv:443/live @ USTREAM: . ... rtmp://live.vaughnlive.tv:443/live
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="plugin.stream.vaughnlive.tv"
        name="Vaughn Live"
-       version="0.0.2"
+       version="0.0.3"
        provider-name="The[COLOR tan]Highway[/COLOR], Shani">
   <requires>
   	<import addon="xbmc.python" version="2.1.0"/>
@@ -20,7 +20,7 @@
   	<platform>all</platform>
     <forum>http://www.xbmchub.com/forums/thehighways-xbmc-addons/</forum>
     <website>http://www.xbmchub.com/</website>
-    <source>https://github.com/HIGHWAY99/</source>
+    <source>http://github.com/HIGHWAY99/plugin.stream.vaughnlive.tv/</source>
     <email></email>
   </extension>
 </addon>

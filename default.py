@@ -236,28 +236,43 @@ def PlayLiveStream(pageUrl='',Name='',Thumb='',Channel='',roomId='',roomSlug='',
 		if pageUrl.startswith('/'): pageUrl=mainSite+pageUrl
 		deb('pageUrl',pageUrl); 
 		#if len(Channel) > 0: pageUrl=mainSite+"/embed/video/%s" % Channel
-		if len(Channel) > 0: pageUrl=mainSite+"/%s" % Channel
-		html=messupText(nolines(nURL(pageUrl)),True,True); 
+		if (len(pageUrl)==0) and (len(Channel) > 0): pageUrl=mainSite+"/%s" % Channel
+		elif (not '://' in pageUrl): pageUrl=mainSite+pageUrl
+		html=messupText(nolines(nURL(pageUrl)),True,True); deb('length of html',str(len(html))); #debob(html); 
 		if len(Channel)==0:
 			try:    Channel=re.compile('vsVars\d+.k2 = "(.+?)";').findall(html)[0]
 			except: Channel=''
 		#try: 		vidHash=re.compile("flashvars.roomId\s*=\s*'(.+?)';").findall(html)[0]
 		#except: vidHash=''
-		try: 		liVe=re.compile('vsVars\d+.k1 = "(.+?)";').findall(html)[0]
+		#try: 		SiteDomain=re.compile('://((?:[0-9A-Za-z]+\.)?[0-9A-Za-z]+\.[0-9A-Za-z]+)/";').findall(pageUrl)[0]; 
+		#SD1='://((?:[0-9A-Za-z]+\.)?[0-9A-Za-z]+\.[0-9A-Za-z]+)/";'
+		#SD1='://((?:www\.)?[0-9A-Za-z]+\.[0-9A-Za-z]+)/";'
+		#SD1='//([0-9A-Za-z]+\.[0-9A-Za-z]+)/";'
+		#try: 		SiteDomain=re.compile(SD1).findall(pageUrl)[0]; 
+		try: 		SiteDomain=pageUrl.split('://')[1].split('/')[0]
+		except: SiteDomain='vaughnlive.tv'
+		debob(['SiteDomain',SiteDomain]); 
+		try: 		liVe=re.compile('vsVars\d+.k1 = "(.+?)";').findall(html)[0]; 
 		except: liVe=''
-		try: 		TimeStampA=re.compile('vsVars\d+.t = "(\d+)";').findall(html)[0]
+		debob(['liVe',liVe]); 
+		try: 		TimeStampA=re.compile('vsVars\d+.t = "(\d+)";').findall(html)[0]; 
 		except: TimeStampA=''
-		try: 		vidServers=re.compile('(\d+\.\d+\.\d+\.\d+\:443)').findall(html)
+		debob(['TimeStampA',TimeStampA]); 
+		try: 		vidServers=re.compile('(\d+\.\d+\.\d+\.\d+\:443)').findall(html); 
 		except: vidServers=''
-		try: 		vidServer=vidServers[0]
+		debob(['vidServers',vidServers]); 
+		try: 		vidServer=vidServers[0]; 
 		except: vidServer=''
+		if len(vidServer)==0: vidServer='live.%s:443' % SiteDomain; #'mvn.vaughnsoft.net:443/video/edge'
+		#if len(vidServer)==0: vidServer='mvn.vaughnsoft.net/video/edge'
+		debob(['vidServer',vidServer]); 
 		##streamUrl="rtmp://%s/live?%s playpath=live_%s swfUrl=http://vaughnlive.tv/800021294/swf/VaughnSoftPlayer.swf live=1 pageUrl=http://vaughnlive.tv/embed/video/%s?viewers=true&watermark=left&autoplay=true Conn=S:OK --live" % (vidServer,vidHash,Channel,Channel); 
 		#url="rtmp://%s/live? playpath=live_%s swfUrl=http://vaughnlive.tv/800021294/swf/VaughnSoftPlayer.swf live=1 pageUrl=http://vaughnlive.tv/embed/video/%s?viewers=true&watermark=left&autoplay=true Conn=S:OK --live" % (vidServer,Channel,Channel); 
 		TOK=''; #TOK='token=30dabc4871922a1314192e925ab7961d'; 
 		HaSH=''; #HaSH='lkS0dd2dfe8e8aeb3e9fa6d6999a4ddd921'; 
-		try: 		HaSHa=re.compile('vsVars\d\d\d\d\d\d\d\d\d\d\d.[0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z]+ = "(.+?)";').findall(html)[0]
+		try: 		HaSHa=re.compile('vsVars\d\d\d\d\d\d\d\d\d\d\d.[0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z]+\s+=\s+"(.+?)";').findall(html)[0]
 		except: HaSHa=''
-		try: 		HaSHb=re.compile(  'vsVars\d\d\d\d\d\d\d\d\d\d.[0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z]+ = "(.+?)";').findall(html)[0]
+		try: 		HaSHb=re.compile(  'vsVars\d\d\d\d\d\d\d\d\d\d.[0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z]+\s+=\s+"(.+?)";').findall(html)[0]
 		except: HaSHb=''
 		try:		HaSHaa=decrypt_vaughnlive(HaSHa)
 		except:	HaSHaa=''
@@ -266,7 +281,18 @@ def PlayLiveStream(pageUrl='',Name='',Thumb='',Channel='',roomId='',roomSlug='',
 		debob(['HaSHa',HaSHa,HaSHaa]); debob(['HaSHb',HaSHb,HaSHbb]); 
 		#HaSH=HaSHaa
 		HaSH=HaSHbb
-		url="rtmp://%s/live?%s playpath=live_%s swfUrl=http://vaughnlive.tv/800021294/swf/VaughnSoftPlayer.swf live=1 timeout=20 pageUrl=http://vaughnlive.tv/embed/video/%s?viewers=true&watermark=left&autoplay=true %s Conn=S:OK --live" % (vidServer,HaSH,Channel,Channel,TOK); 
+		LiveTag='live'
+		if   'instagib.' in SiteDomain: LiveTag='instagib'
+		elif 'vapers.'   in SiteDomain: LiveTag='vapers'
+		elif 'breakers.' in SiteDomain: LiveTag='breakers'
+		
+		url="rtmp://%s/live?%s playpath=%s_%s swfUrl=http://%s/800021294/swf/VaughnSoftPlayer.swf live=1 timeout=20 pageUrl=http://%s/embed/video/%s?viewers=true&watermark=left&autoplay=true %s Conn=S:OK --live" % (vidServer,HaSH,LiveTag,Channel,SiteDomain,SiteDomain,Channel,TOK); 
+		#if   'vaughn'    in SiteDomain: url="rtmp://%s/live?%s playpath=%s_%s swfUrl=http://%s/800021294/swf/VaughnSoftPlayer.swf live=1 timeout=20 pageUrl=http://%s/embed/video/%s?viewers=true&watermark=left&autoplay=true %s Conn=S:OK --live" % (vidServer,HaSH,LiveTag,Channel,Channel,SiteDomain,SiteDomain,TOK); 
+		#el
+		#if 'instagib.' in SiteDomain: url="rtmp://%s/live?%s playpath=%s_%s live=1 timeout=20" % (vidServer,HaSH,LiveTag,Channel); 
+		#if 'instagib.' in SiteDomain: url="rtmp://%s/live?%s/%s_%s live=1 timeout=20" % (vidServer,HaSH,LiveTag,Channel); 
+		#else: url="rtmp://%s/live?%s/%s_%s live=1 timeout=20" % (vidServer,HaSH,LiveTag,Channel); 
+		
 		#if len(Thumb)==0:
 		#	try:    Thumb=re.compile("flashvars.roomAvatar\s*=\s*'(.+?)';").findall(html)[0]
 		#	except: Thumb=iconSite
@@ -286,6 +312,9 @@ def PlayLiveStream(pageUrl='',Name='',Thumb='',Channel='',roomId='',roomSlug='',
 	## ### ## 
 	#pageUrl='',Name='',Thumb='',roomId='',roomSlug='',plot='',liVe='',streamUrl='',streamkey='',youtubekey='',sourcetype='show'
 	debob(",['pars', {'streamurl': '%s', 'roomslug': '%s', 'fimg': '%s', 'img': '%s', 'title': '%s', 'url': '%s', 'type': '%s', 'live': '%s', 'mode': 'PlayStreamUP', 'roomid': '%s', 'sourcetype': '%s'}, " % (str(url),str(roomSlug),str(fimg),str(Thumb),str(Name).replace('[COLOR FFAAAAAA] [[COLOR FF777777]Live[/COLOR]][/COLOR]',''),str(pageUrl),str(addpr('type','')),str(liVe),str(roomId),str(sourcetype))); 
+	
+	# return
+	
 	infoLabels={"Studio":liVe,"Title":'%s [%s]: %s' % (Channel,liVe,Name),"cover_url":Thumb,"background_url":fimg,'plot':plot}; 
 	li=xbmcgui.ListItem(Name,iconImage=Thumb,thumbnailImage=Thumb); 
 	li.setInfo(type="Video", infoLabels=infoLabels ); li.setProperty('IsPlayable', 'true'); 
@@ -368,6 +397,8 @@ def ListShows(Url,Page='',TyPE='js',idList='[]', csrfToken=''):
 		iC=len(matches); USER_AGENT='Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:30.0) Gecko/20100101 Firefox/30.0'; 
 		for (PrefixD,match,img) in matches: #(img,url,name,genres)
 			labs={}; cMI=[]; is_folder=False; plot=''; name=match.replace('_',' '); labs[u'plot']=plot; 
+			#img='http://thumbnails.vaughnsoft.com/0/'+img
+			img='http://vaughnlive.tv/app/loadImg.php?a=profile&u='+match
 			if len(img)==0: img=iconSite; 
 			elif not '://' in img: img='http://'+img #+"?test"
 			#img+='|User-Agent=%s' % (USER_AGENT); 
@@ -535,6 +566,7 @@ def BrowseMenu(zz=[]):
 	zz.append("News & Tech")
 	zz.append("Lifestyles")
 	zz.append("Espanol")
+	
 	zz.append("Vapers")
 	zz.append("Breakers")
 	zz.append("Gamers")

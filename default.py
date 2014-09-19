@@ -45,7 +45,7 @@ site=addpr('site',''); section=addpr('section',''); url=addpr('url',''); section
 def About(head=''+cFL(SiteName,'blueviolet')+'',m=''):
 	m=''
 	if len(m)==0:
-		m+='IRC Chat:  '+cFL('#XBMCHUB','blueviolet')+' @ '+cFL('irc.Freenode.net','blueviolet')
+		m+='IRC Chat:  '+cFL('#TVADDONS','blueviolet')+' @ '+cFL('irc.Freenode.net','blueviolet')
 		m+=CR+'Site Name:  '+SiteName+CR+'Site Tag:  '+SiteTag+CR+'Site Domain:  '+mainSite+CR+'Site Icon:  '+iconSite+CR+'Site Fanart:  '+fanartSite
 		m+=CR+'Age:  Please make sure you are of a valid age to watch the material shown.'
 		#m+=CR+CR+'Known Hosts for Videos:  '
@@ -80,10 +80,6 @@ def spAfterSplit(t,ss):
 def spBeforeSplit(t,ss):
 	if ss in t: t=t.split(ss)[0]
 	return t
-def FixImage(img):
-	#try: 
-	#except: pass
-	return img
 def AFColoring(t): 
 	if len(t)==0: return t
 	elif len(t)==1: return cFL(t,colorA) #colorA)
@@ -96,7 +92,7 @@ def wwA(t,ww): #for Watched State Display
 ### ############################################################################################################
 ### ############################################################################################################
 def psgn(x,t=".png"):
-	s="http://i.imgur.com/"; d=artp('default_icon')
+	s="http://i.imgur.com/"; d=iconSite #artp('default_icon')
 	try:
 		return {
 			'popular': 				artp('browse_popular') #d #s+""+t
@@ -115,6 +111,8 @@ def psgn(x,t=".png"):
 			,'img_prev':									artp('browse_prev') #d #'http://kissanime.com/Content/images/previous.png'
 			,'next':											artp('browse_next') #d #'http://kissanime.com/Content/images/next.png'
 			,'prev':											artp('browse_prev') #d #'http://kissanime.com/Content/images/previous.png'
+			,'browse':										d #artp('browse')
+			,'topbar':										d #artp('browse')
 			,'a': 		s+"OvFHLK2"+t
 			,'b': 		s+"ezem9mn"+t
 			,'c': 		s+"707ILz1"+t
@@ -286,7 +284,7 @@ def PlayLiveStream(pageUrl='',Name='',Thumb='',Channel='',roomId='',roomSlug='',
 		elif 'vapers.'   in SiteDomain: LiveTag='vapers'
 		elif 'breakers.' in SiteDomain: LiveTag='breakers'
 		
-		url="rtmp://%s/live?%s playpath=%s_%s swfUrl=http://%s/800021294/swf/VaughnSoftPlayer.swf live=1 timeout=20 pageUrl=http://%s/embed/video/%s?viewers=true&watermark=left&autoplay=true %s Conn=S:OK --live" % (vidServer,HaSH,LiveTag,Channel,SiteDomain,SiteDomain,Channel,TOK); 
+		url="rtmp://%s/live?%s playpath=%s_%s swfUrl=http://%s/800021294/swf/VaughnSoftPlayer.swf live=1 timeout=30 pageUrl=http://%s/embed/video/%s?viewers=true&watermark=left&autoplay=true %s Conn=S:OK --live" % (vidServer,HaSH,LiveTag,Channel,SiteDomain,SiteDomain,Channel,TOK); 
 		#if   'vaughn'    in SiteDomain: url="rtmp://%s/live?%s playpath=%s_%s swfUrl=http://%s/800021294/swf/VaughnSoftPlayer.swf live=1 timeout=20 pageUrl=http://%s/embed/video/%s?viewers=true&watermark=left&autoplay=true %s Conn=S:OK --live" % (vidServer,HaSH,LiveTag,Channel,Channel,SiteDomain,SiteDomain,TOK); 
 		#el
 		#if 'instagib.' in SiteDomain: url="rtmp://%s/live?%s playpath=%s_%s live=1 timeout=20" % (vidServer,HaSH,LiveTag,Channel); 
@@ -370,84 +368,89 @@ def History101():
 				except: pass
 	set_view('tvshows',view_mode=addst('tvshows-view')); eod()
 
-def ListShows(Url,Page='',TyPE='js',idList='[]', csrfToken=''):
+def ListShows(Url,Page='',TyPE='js',idList='[]',csrfToken='',MeTHoD='re.compile'):
 	#if len(csrfToken)==0: maipageHtml=nURL('http://vaughnlive.tv/',cookie_file=CookFile,load_cookie=False,save_cookie=True); tokenParam='content="(.*?)" name="csrf-token"'; csrfToken=re.compile(tokenParam).findall(maipageHtml)[0]; 
 	## ### ## 
 	debob(['Url',Url,'TyPE',TyPE])
 	if len(Url)==0: debob("No url found."); return
 	if (not mainSite in Url) and (not mainSite2 in Url) and (not mainSite3 in Url) and (not mainSite4 in Url): Url=mainSite+Url
 	deb('Url',Url); 
-	html=nURL(Url,headers={'Referer':mainSite}); 
-	html=messupText(nolines(html),True,True); 
-	deb('length of html',str(len(html))); #debob(html); 
+	html=messupText(nolines(nURL(Url,headers={'Referer':mainSite})),True,True); deb('length of html',str(len(html))); #debob(html); 
 	if len(html)==0: debob("No html found."); eod(); return
-	#if TyPE.lower()=='php':
-	##ListShows(mainSite+"/app/topbar.php?s=vl%s" % addpr('cat',''),addpr('page',''),addpr('type',''),addpr('idlist',''))
-	##ListShows(mainSite+"/browse/%s?a=mvn" % addpr('cat',''),addpr('page',''),addpr('type',''),addpr('idlist',''))
-	if mainSite+"/app/topbar.php?s=vl" in Url:
-		s='<div class="topbar_img"><a href="(\D+://(?:www.)?(?:/|vapers.tv/|breakers.tv/|vaughnlive.tv/|instagib.tv/)?)(.*?)">()<img name="mvnPicTopBar_.*?" width="\d+" height="\d+" border="\d+" onerror="mvnImages.profileError\(\'mvnPicTopBar_.*?\',\'.*?\'\);" class=".*?" alt=".*?" title=".*?"/></a></div'; 
-	elif mainSite+"/browse/" in Url:
-		s='<a href="((?:http://)?(?:/|vapers.tv/|breakers.tv/|vaughnlive.tv/|instagib.tv/)?)(.+?)" target="_top"><img src="//(thumbnails.vaughnsoft.com/\d+/fetch/\D+/.+?.png)" class"browseThumb" width="\d*" height="\d*" /></a>'; 
+	## ### ## 
+	if (mainSite+"/app/topbar.php?s=") in Url:
+		s='<div\s+class="topbar_img">\s*<a\s+href="(\D+://(?:www.)?(?:/|vapers.tv/|breakers.tv/|vaughnlive.tv/|instagib.tv/)?)(.*?)"\s*>(())\s*<img\s+name="mvnPicTopBar_.*?"\s+width="\d*"\s+height="\d*" border="\d*"\s+onerror="mvnImages.profileError\(\'mvnPicTopBar_[0-9A-Za-z_\-]+\',\'[0-9A-Za-z_\-]+\'\);"\s+class="[0-9A-Za-z_\-]*"\s+alt="[0-9A-Za-z_\-]+(?: - \D+.)?"\s+title="[0-9A-Za-z_\-]+(?: - \D+.)?"\s*/>\s*</a>\s*</div'; 
+		#MeTHoD='split'
+	elif (mainSite+"/browse/") in Url:
+		s='<a href="((?:http://)?(?:/|vapers.tv/|breakers.tv/|vaughnlive.tv/|instagib.tv/)?)(.+?)" target="_top"><img src="//(thumbnails.vaughnsoft.com/(\d+)/fetch/\D+/.+?.png)" class"browseThumb" width="\d*" height="\d*"\s*/></a>'; 
 	else: return
-	html=html.replace('</div>','</div\n>'); #debob(html); 
-	try: matches=re.compile(s).findall(html); deb('# of matches found',str(len(matches))); #debob(matches); 
-	except: matches=''; debob('No matches were found.'); 
+	html=html.replace('</div>','</div\n\r\a>'); #debob(html); 
+	if (MeTHoD=='split') and ('</MVN>' in html):
+		debob(['MeTHoD',MeTHoD,'"</MVN>" is in HTML.']); 
+		matches=html.split('</MVN>')[-1].split(',')
+	elif (MeTHoD=='re.compile') or (not '</MVN>' in html): #MeTHoD=='re.compile':
+		debob(['MeTHoD',MeTHoD,'"</MVN>" is not in HTML.']); 
+		try: matches=re.compile(s).findall(html); deb('# of matches found',str(len(matches))); #debob(matches); 
+		except: matches=''; debob('No matches were found.'); 
+	else: matches=[]
+	## ### ## 
 	if len(matches) > 0:
-		#for (url,img,name,genres,status,NoEps,year) in matches:
 		iC=len(matches); USER_AGENT='Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:30.0) Gecko/20100101 Firefox/30.0'; 
-		for (PrefixD,match,img) in matches: #(img,url,name,genres)
-			labs={}; cMI=[]; is_folder=False; plot=''; name=match.replace('_',' '); labs[u'plot']=plot; 
-			#img='http://thumbnails.vaughnsoft.com/0/'+img
-			img='http://vaughnlive.tv/app/loadImg.php?a=profile&u='+match
-			if len(img)==0: img=iconSite; 
-			elif not '://' in img: img='http://'+img #+"?test"
-			#img+='|User-Agent=%s' % (USER_AGENT); 
-			fimg=fanartSite; #deb('img',img); 
-			##imgHtml=nURL(img,method='get',headers={'Referer':Url}); #debob(['imgHtml',imgHtml])
-			##if len(imgHtml)==0: img=artp('default_channel')
-			#img=mainSite+"/app/loadImg.php?a=profile&u=%s" % match; 
-			#img="http://thumbnails.vaughnsoft.com/1409730190/fetch/live/%s.png" % match
-			##imgData=nURL(img,headers={'Referer':Url}); 
-			##imgN=xbmc.translatePath(os.path.join(common._addonPath,"data4",match+".jpg")); 
-			##common._SaveFile(imgN,imgData); 
-			##img=imgN; 
-			if '://' in PrefixD:
-				url=PrefixD+"%s" % match; urlPage=PrefixD+"%s" % match; 
-				urlEmbedVideo=PrefixD+"embed/video/%s" % match; 
-				urlEmbedChat=PrefixD+"embed/chat/%s" % match; 
-			else: 
-				url=mainSite+"/%s" % match; urlPage=mainSite+"/%s" % match; 
-				urlEmbedVideo=mainSite+"/embed/video/%s" % match; 
-				urlEmbedChat=mainSite+"/embed/chat/%s" % match; 
-			labs[u'title']=cFL(name,colorA); #labs[u'title']=cFL(name+cFL(" ["+cFL(liVe,colorC)+"]",colorB),colorA); 
-			pars={'url':url,'title':name,'fimg':fimg,'img':img,'mode':'PlayLiveStream','channel':match,'site':site,'section':section,'sourcetype':'auto'}; 
-			#if TyPE=='html|user': pars['mode']='ListShows'; pars['page']=''; pars['type']='html'; 
-			Clabs={'title':name,'year':'','url':url,'commonid':'','img':img,'fanart':fimg,'plot':labs[u'plot'],'todoparams':_addon.build_plugin_url(pars),'site':site,'section':section}; 
-			try: cMI=ContextMenu_LiveStreams(Clabs); 
-			except: pass
-			try: debob(['pars',pars,'labs',labs]); 
-			except: pass
-			cMI.append(('Visit Page', 'XBMC.RunPlugin(%s)' % _addon.build_plugin_url({'mode':'BrowseUrl','url':urlPage})))
-			cMI.append(('Visit Video', 'XBMC.RunPlugin(%s)' % _addon.build_plugin_url({'mode':'BrowseUrl','url':urlEmbedVideo})))
-			cMI.append(('Visit Chat', 'XBMC.RunPlugin(%s)' % _addon.build_plugin_url({'mode':'BrowseUrl','url':urlEmbedChat})))
-			#debob(fimg); debob(img); 
-			try: _addon.add_directory(pars,labs,is_folder=is_folder,fanart=fimg,img=img,contextmenu_items=cMI,total_items=iC,context_replace=False)
-			except: pass
-			## ### ## 
-			#if is_folder==False:
-			#	sDB=[]; 
-			#	#'pageurl, title, streamtype, live, thumb, fanart, roomid, roomslug, sourcetype, streamurl, streamkey, 
-			#	#youtubeposition, youtubecurrentindex, youtubeduration, youtubeplaylistcount, youtubevideoid, youtubeuuid, 
-			#	#plot, timestampyear, timestampmonth, timestampday'
-			#	#'"%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s"'
-			#	if url.startswith('/'): url=mainSite2+url
-			#	GroupB=(  urllib.quote_plus(str(url)),urllib.quote_plus(str(name)),urllib.quote_plus(str(liVe)),urllib.quote_plus(str(img)),urllib.quote_plus(str(roomId)),urllib.quote_plus(str(roomSlug)),urllib.quote_plus(str(plot)),str(datetime.date.today().year),str(datetime.date.today().month),str(datetime.date.today().day)  )
-			#	#sDB.append( 'INSERT OR REPLACE INTO channels ('+ps('db channels tags1a')+') VALUES ("%s","%s","%s","%s","%s","%s","%s","%s","%s","%s")' % GroupB )
-			#	sDB.append( 'INSERT INTO channels ('+ps('db channels tags1a')+') VALUES ("%s","%s","%s","%s","%s","%s","%s","%s","%s","%s")' % GroupB )
-			#	debob(sDB); 
-			#	do_database(sDB); 
-			#	#do_database_test(sDB); 
-			## ### ## 
+		if MeTHoD=='re.compile':
+			for (PrefixD,match,img,iTS) in matches: #(img,url,name,genres)
+				labs={}; cMI=[]; is_folder=False; plot=''; name=match.replace('_',' '); labs[u'plot']=plot; LocImgName=''; 
+				img="http://cdn.vaughnsoft.com/vaughnsoft/vaughn/img_profiles/%s_125.jpg"%match
+				fimg="http://cdn.vaughnsoft.com/vaughnsoft/vaughnlive/img_backgrounds/%s.jpg"%match #fimg=fanartSite; #deb('img',img); 
+				if '://' in PrefixD:url=PrefixD+"%s" % match; urlPage=PrefixD+"%s" % match; urlEmbedVideo=PrefixD+"embed/video/%s" % match; urlEmbedChat=PrefixD+"embed/chat/%s" % match; 
+				else: url=mainSite+"/%s" % match; urlPage=mainSite+"/%s" % match; urlEmbedVideo=mainSite+"/embed/video/%s" % match; urlEmbedChat=mainSite+"/embed/chat/%s" % match; 
+				labs[u'title']=cFL(name,colorA); #labs[u'title']=cFL(name+cFL(" ["+cFL(liVe,colorC)+"]",colorB),colorA); 
+				pars={'url':url,'title':name,'fimg':fimg,'img':img,'mode':'PlayLiveStream','channel':match,'site':site,'section':section,'sourcetype':'auto'}; 
+				Clabs={'title':name,'year':'','url':url,'commonid':'','img':img,'fanart':fimg,'plot':labs[u'plot'],'todoparams':_addon.build_plugin_url(pars),'site':site,'section':section}; 
+				try: cMI=ContextMenu_LiveStreams(Clabs); 
+				except: pass
+				try: debob(['pars',pars,'labs',labs]); 
+				except: pass
+				cMI.append(('Visit Page', 'XBMC.RunPlugin(%s)' % _addon.build_plugin_url({'mode':'BrowseUrl','url':urlPage})))
+				cMI.append(('Visit Video', 'XBMC.RunPlugin(%s)' % _addon.build_plugin_url({'mode':'BrowseUrl','url':urlEmbedVideo})))
+				cMI.append(('Visit Chat', 'XBMC.RunPlugin(%s)' % _addon.build_plugin_url({'mode':'BrowseUrl','url':urlEmbedChat})))
+				try: _addon.add_directory(pars,labs,is_folder=is_folder,fanart=fimg,img=img,contextmenu_items=cMI,total_items=iC,context_replace=False)
+				except: pass
+		elif MeTHoD=='split':
+			for (match) in matches: #(img,url,name,genres)
+				if len(match.strip()) > 0:
+					PrefixD=''; img=''; iTS=''
+					labs={}; cMI=[]; is_folder=False; plot=''; name=match.replace('_',' '); labs[u'plot']=plot; LocImgName=''; 
+					img="http://cdn.vaughnsoft.com/vaughnsoft/vaughn/img_profiles/%s_125.jpg"%match
+					fimg="http://cdn.vaughnsoft.com/vaughnsoft/vaughnlive/img_backgrounds/%s.jpg"%match #fimg=fanartSite; #deb('img',img); 
+					if '://' in PrefixD:url=PrefixD+"%s" % match; urlPage=PrefixD+"%s" % match; urlEmbedVideo=PrefixD+"embed/video/%s" % match; urlEmbedChat=PrefixD+"embed/chat/%s" % match; 
+					else: url=mainSite+"/%s" % match; urlPage=mainSite+"/%s" % match; urlEmbedVideo=mainSite+"/embed/video/%s" % match; urlEmbedChat=mainSite+"/embed/chat/%s" % match; 
+					labs[u'title']=cFL(name,colorA); #labs[u'title']=cFL(name+cFL(" ["+cFL(liVe,colorC)+"]",colorB),colorA); 
+					pars={'url':url,'title':name,'fimg':fimg,'img':img,'mode':'PlayLiveStream','channel':match,'site':site,'section':section,'sourcetype':'auto'}; 
+					Clabs={'title':name,'year':'','url':url,'commonid':'','img':img,'fanart':fimg,'plot':labs[u'plot'],'todoparams':_addon.build_plugin_url(pars),'site':site,'section':section}; 
+					try: cMI=ContextMenu_LiveStreams(Clabs); 
+					except: pass
+					try: debob(['pars',pars,'labs',labs]); 
+					except: pass
+					cMI.append(('Visit Page', 'XBMC.RunPlugin(%s)' % _addon.build_plugin_url({'mode':'BrowseUrl','url':urlPage})))
+					cMI.append(('Visit Video', 'XBMC.RunPlugin(%s)' % _addon.build_plugin_url({'mode':'BrowseUrl','url':urlEmbedVideo})))
+					cMI.append(('Visit Chat', 'XBMC.RunPlugin(%s)' % _addon.build_plugin_url({'mode':'BrowseUrl','url':urlEmbedChat})))
+					try: _addon.add_directory(pars,labs,is_folder=is_folder,fanart=fimg,img=img,contextmenu_items=cMI,total_items=iC,context_replace=False)
+					except: pass
+	#		## ### ## 
+	#		#if is_folder==False:
+	#		#	sDB=[]; 
+	#		#	#'pageurl, title, streamtype, live, thumb, fanart, roomid, roomslug, sourcetype, streamurl, streamkey, 
+	#		#	#youtubeposition, youtubecurrentindex, youtubeduration, youtubeplaylistcount, youtubevideoid, youtubeuuid, 
+	#		#	#plot, timestampyear, timestampmonth, timestampday'
+	#		#	#'"%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s"'
+	#		#	if url.startswith('/'): url=mainSite2+url
+	#		#	GroupB=(  urllib.quote_plus(str(url)),urllib.quote_plus(str(name)),urllib.quote_plus(str(liVe)),urllib.quote_plus(str(img)),urllib.quote_plus(str(roomId)),urllib.quote_plus(str(roomSlug)),urllib.quote_plus(str(plot)),str(datetime.date.today().year),str(datetime.date.today().month),str(datetime.date.today().day)  )
+	#		#	#sDB.append( 'INSERT OR REPLACE INTO channels ('+ps('db channels tags1a')+') VALUES ("%s","%s","%s","%s","%s","%s","%s","%s","%s","%s")' % GroupB )
+	#		#	sDB.append( 'INSERT INTO channels ('+ps('db channels tags1a')+') VALUES ("%s","%s","%s","%s","%s","%s","%s","%s","%s","%s")' % GroupB )
+	#		#	debob(sDB); 
+	#		#	do_database(sDB); 
+	#		#	#do_database_test(sDB); 
+	#		## ### ## 
 	#NextPage=str(int(page)+1); 
 	#if (("page="+NextPage) in html) and (not TyPE=='js|featured'):
 	#	_addon.add_directory({'mode':'ListShows','site':site,'url':Url,'page':NextPage,'type':str(TyPE),'idlist':str(ListOfIds),'csrfToken':csrfToken},{'title':cFL('>> Next %s' % cFL(NextPage,colorA),colorB)},is_folder=True,fanart=fanartSite,img=psgn('next'))
@@ -557,7 +560,17 @@ def DevFeaturedMenu():
 	#set_view('list',view_mode=addst('default-view')); eod()
 	set_view('tvshows',view_mode=addst('tvshows-view')); eod()
 	##
-def BrowseMenu(zz=[]):
+def BrowseMenu_FetchCats(Url='/browse',zz=[],d=[]):
+	if (not '//' in Url) and (not '://' in Url) and (not mainSite in Url) and (not mainSite2 in Url) and (not mainSite3 in Url) and (not mainSite4 in Url): Url=mainSite+Url
+	if ('//' in Url) and (not '://' in Url): Url='http:'+Url
+	html=messupText(nolines(nURL(Url,headers={'Referer':mainSite})),True,True); deb('length of html',str(len(html))); #debob(html); 
+	if len(html)==0: debob("No html found."); return d
+	zz=re.compile('<div class="browseTab browseTabAccent(?:Selected)?" id="browseBtn[0-9A-Za-z]+" onclick="Browse\.[0-9A-Za-z]+\(\);"><img src="(/img/cat_.+?_white.png)" class="cat_img"/>\s*(.+?)\s*</div').findall(html.replace('</div>','</div\n\r\a>'))
+	
+	return zz
+def BrowseMenu(Url='/browse',zz=[]):
+	#zz=BrowseMenu_FetchCats(Url)
+	
 	zz.append("Misc")
 	zz.append("People")
 	zz.append("Nature")
@@ -567,14 +580,45 @@ def BrowseMenu(zz=[]):
 	zz.append("Lifestyles")
 	zz.append("Espanol")
 	
-	zz.append("Vapers")
-	zz.append("Breakers")
-	zz.append("Gamers")
+	#zz.append("Vapers")
+	#zz.append("Breakers")
+	#zz.append("Gamers")
 	_addon.add_directory({'mode':'BrowseCat3','site':site,'cat':'','type':'php'},{'title':AFColoring('All')},is_folder=True,fanart=fanartSite,img=(mainSite+'/img/cat_all_white.png'))
 	for z in zz: 
 		nonTitle=z.lower().replace(' ','').replace('&','')
-		catName=nonTitle.replace('musiccafe','music_cafe').replace('newstech','news_tech')
+		catName=nonTitle.replace('musiccafe3','music_cafe').replace('newstech','news_tech')
 		pars={'mode':'BrowseCat3','site':site,'cat':catName,'type':'php'}; 
+		img=(mainSite+'/img/cat_%s_white.png' % nonTitle.replace('musiccafe','music'))
+		#img=(mainSite+'/img/cat_%s.png' % nonTitle)
+		_addon.add_directory(pars,{'title':AFColoring(z)},is_folder=True,fanart=fanartSite,img=img); 
+		#_addon.add_directory(pars,{'title':AFColoring(z)},is_folder=True,fanart=fanartSite,img=psgn('cat '+z.lower())); 
+	#_addon.add_directory({'mode':'BrowseCat','site':site,'cat':'popular','type':'js'},{'title':AFColoring('Popular')},is_folder=True,fanart=fanartSite,img=psgn('popular'))
+	#_addon.add_directory({'mode':'BrowseCat','site':site,'cat':'entertainment','type':'js'},{'title':AFColoring('Entertainment')},is_folder=True,fanart=fanartSite,img=psgn('entertainment'))
+	#_addon.add_directory({'mode':'BrowseCat','site':site,'cat':'gaming','type':'js'},{'title':AFColoring('Gaming')},is_folder=True,fanart=fanartSite,img=psgn('gaming'))
+	#_addon.add_directory({'mode':'BrowseCat','site':site,'cat':'music','type':'js'},{'title':AFColoring('Music')},is_folder=True,fanart=fanartSite,img=psgn('music'))
+	#_addon.add_directory({'mode':'BrowseCat','site':site,'cat':'social','type':'js'},{'title':AFColoring('Social')},is_folder=True,fanart=fanartSite,img=psgn('social'))
+	set_view('list',view_mode=addst('default-view')); eod()
+	##
+def TopBarMenu(Url='/app/topbar.php?s=vl',zz=[]):
+	#zz=BrowseMenu_FetchCats(Url)
+	
+	zz.append("Misc")
+	zz.append("People")
+	zz.append("Nature")
+	zz.append("Creative")
+	zz.append("Music Cafe")
+	zz.append("News & Tech")
+	zz.append("Lifestyles")
+	zz.append("Espanol")
+	
+	#zz.append("Vapers")
+	#zz.append("Breakers")
+	#zz.append("Gamers")
+	_addon.add_directory({'mode':'BrowseCat','site':site,'cat':'','type':'php'},{'title':AFColoring('All')},is_folder=True,fanart=fanartSite,img=(mainSite+'/img/cat_all_white.png'))
+	for z in zz: 
+		nonTitle=z.lower().replace(' ','').replace('&','')
+		catName=nonTitle.replace('musiccafe','music_cafe').replace('newstech','news_tech')
+		pars={'mode':'BrowseCat','site':site,'cat':catName,'type':'php'}; 
 		img=(mainSite+'/img/cat_%s_white.png' % nonTitle.replace('musiccafe','music'))
 		#img=(mainSite+'/img/cat_%s.png' % nonTitle)
 		_addon.add_directory(pars,{'title':AFColoring(z)},is_folder=True,fanart=fanartSite,img=img); 
@@ -592,6 +636,8 @@ def SectionMenu():
 	##splash.do_My_Splash(HowLong=5,resize=False); 
 	SpecialCODE=addst('special-code',''); LocalLists=[]; 
 	_addon.add_directory({'mode':'BrowseMenu','site':site},{'title':AFColoring('Browse')},is_folder=True,fanart=fanartSite,img=psgn('browse'))
+	_addon.add_directory({'mode':'TopBarMenu','site':site},{'title':AFColoring('Top Bar')},is_folder=True,fanart=fanartSite,img=psgn('topbar'))
+	
 	#_addon.add_directory({'mode':'BrowseCat2','site':site,'cat':'rooms','type':'js|featured'},{'title':AFColoring('Featured')},is_folder=True,fanart=fanartSite,img=psgn('browse featured'))
 	#_addon.add_directory({'mode':'SpecialMenu','url':'http://raw.github.com/HIGHWAY99/plugin.video.streamup/master/lists/DevsFeaturedList.txt','site':site},{'title':AFColoring("Dev's Featured List")},is_folder=True,fanart=fanartSite,img=psgn('browse devs featured'))
 	
@@ -645,6 +691,7 @@ def mode_subcheck(mode='',site='',section='',url=''):
 	elif (mode=='SpecialMenu'): 				SpecialMenu(url)
 	elif (mode=='DevFeaturedMenu'): 		DevFeaturedMenu()
 	elif (mode=='BrowseMenu'): 					BrowseMenu()
+	elif (mode=='TopBarMenu'): 					TopBarMenu()
 	##																 #ListShows(Url,Page='',TyPE='js',idList='[]', csrfToken='')
 	elif (mode=='ListShows'): 					ListShows(url,addpr('page',''),addpr('type',''),addpr('idlist',''),addpr('csrfToken',''))
 	elif (mode=='BrowseCat'): 					ListShows(mainSite+"/app/topbar.php?s=vl%s" % addpr('cat',''),addpr('page',''),addpr('type',''),addpr('idlist',''))
@@ -658,6 +705,7 @@ def mode_subcheck(mode='',site='',section='',url=''):
 	elif (mode=='BrowseUrl'): 					XBMC_System_Exec('"%s"' % url)
 	elif (mode=='FavoritesList'): 			Fav_List(site=site,section=section,subfav=addpr('subfav',''))
 	elif (mode=='About'): 							eod(); About()
+	elif (mode=='PlayPICTURES'): 				PlayPictures(url)
 	elif (mode=='PlayURL'): 						PlayURL(url)
 	elif (mode=='PlayURLs'): 						PlayURLs(url)
 	elif (mode=='PlayURLstrm'): 				PlayURLstrm(url)

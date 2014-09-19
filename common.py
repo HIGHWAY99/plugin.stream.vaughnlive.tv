@@ -63,7 +63,7 @@ _addonPath	=xbmc.translatePath(_plugin.getAddonInfo('path'))
 _artPath		=xbmc.translatePath(os.path.join(_addonPath,ps('_addon_path_art')))
 _datapath 	=xbmc.translatePath(_addon.get_profile()); 
 _artIcon		=_addon.get_icon(); 
-_artFanart	=_addon.get_fanart()
+_artFanart	=_addon.get_fanart(); 
 xbmcLogFile =xbmc.translatePath(os.path.join('special://logpath','xbmc.log'))
 ##### Important Functions with some dependencies #####
 def dPath(s,fe=''): return xbmc.translatePath(os.path.join(_datapath,s+fe))
@@ -254,7 +254,7 @@ def messupText(t,_html=False,_ende=False,_a=False,Slashes=False):
 		except: t=t
 	#t=t.replace("text:u","")
 	return t
-def nURL(url,method='get',form_data={},headers={},html='',proxy='',User_Agent='',cookie_file='',load_cookie=False,save_cookie=False):
+def nURL(url,method='get',form_data={},headers={},html='',proxy='',User_Agent='',cookie_file='',load_cookie=False,save_cookie=False,compression=True):
 	if url=='': return ''
 	dhtml=''+html
 	if len(User_Agent) > 0: net.set_user_agent(User_Agent)
@@ -262,12 +262,12 @@ def nURL(url,method='get',form_data={},headers={},html='',proxy='',User_Agent=''
 	if len(proxy) > 9: net.set_proxy(proxy)
 	if (len(cookie_file) > 0) and (load_cookie==True): net.set_cookies(cookie_file)
 	if   method.lower()=='get':
-		try: html=net.http_GET(url,headers=headers).content
+		try: html=net.http_GET(url,headers=headers,compression=compression).content
 		except urllib2.HTTPError,e: debob(['urllib2.HTTPError',e]); html=dhtml
 		except Exception,e: debob(['Exception',e]); html=dhtml
 		except: html=dhtml
 	elif method.lower()=='post':
-		try: html=net.http_POST(url,form_data=form_data,headers=headers).content #,compression=False
+		try: html=net.http_POST(url,form_data=form_data,headers=headers,compression=compression).content #,compression=False
 		except urllib2.HTTPError,e: debob(['urllib2.HTTPError',e]); html=dhtml
 		except Exception,e: debob(['Exception',e]); html=dhtml
 		except: html=dhtml
@@ -549,6 +549,24 @@ def PlayVideo(url):
 	infoLabels={"Studio":addpr('studio',''),"ShowTitle":addpr('showtitle',''),"Title":addpr('title','')}
 	li=xbmcgui.ListItem(addpr('title',''),iconImage=addpr('img',''),thumbnailImage=addpr('img',''))
 	li.setInfo(type="Video", infoLabels=infoLabels ); li.setProperty('IsPlayable', 'true')
+	#xbmc.Player().stop()
+	try: _addon.resolve_url(url)
+	except: t=''
+	try: play.play(url, li)
+	except: t=''
+
+def PlayPictures(url):
+	PlayerMethod=addst("core-player")
+	if   (PlayerMethod=='DVDPLAYER'): PlayerMeth=xbmc.PLAYER_CORE_DVDPLAYER
+	elif (PlayerMethod=='MPLAYER'): PlayerMeth=xbmc.PLAYER_CORE_MPLAYER
+	elif (PlayerMethod=='PAPLAYER'): PlayerMeth=xbmc.PLAYER_CORE_PAPLAYER
+	else: PlayerMeth=xbmc.PLAYER_CORE_AUTO
+	play=xbmc.Player(PlayerMeth) ### xbmc.PLAYER_CORE_AUTO | xbmc.PLAYER_CORE_DVDPLAYER | xbmc.PLAYER_CORE_MPLAYER | xbmc.PLAYER_CORE_PAPLAYER
+	#play=xbmc.Player(xbmc.PLAYER_CORE_AUTO) ### xbmc.PLAYER_CORE_AUTO | xbmc.PLAYER_CORE_DVDPLAYER | xbmc.PLAYER_CORE_MPLAYER | xbmc.PLAYER_CORE_PAPLAYER
+	#import urlresolver
+	infoLabels={"Studio":addpr('studio',''),"ShowTitle":addpr('showtitle',''),"Title":addpr('title','')}
+	li=xbmcgui.ListItem(addpr('title',''),iconImage=addpr('img',''),thumbnailImage=addpr('img',''))
+	li.setInfo(type="pictures", infoLabels=infoLabels ); li.setProperty('IsPlayable', 'true')
 	#xbmc.Player().stop()
 	try: _addon.resolve_url(url)
 	except: t=''

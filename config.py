@@ -61,7 +61,7 @@ def ps(x):
 			,'special.home': 				'special:'+os.sep+os.sep+'home'
 			,'special.home.addons': 'special:'+os.sep+os.sep+'home'+os.sep+'addons'+os.sep
 			,'_addon_path_art': 		"art"
-			,'_database_name': 			"animefate"
+			,'_database_name': 			"vaughnlive"
 			,'default_art_ext': 		'.png'
 			,'default_cFL_color': 	'cornflowerblue'
 			,'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3'

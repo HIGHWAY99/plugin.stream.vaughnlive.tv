@@ -260,6 +260,8 @@ vsVars14099477684 .tLb06143c1f0725c27f1aba26f259c3f77c
 vsVars1409947768  .tLb06143c1f0725c27f1aba26f259c3f77c
 
 http://vaughnlive.tv/app/loadImg.php?a=profile&u=
+http://vaughnlive.tv/app/loadImg.php?a=profile&u=docbrown1
+http://thumbnails.vaughnsoft.com/0/fetch/live/moviebay
 
 vaughnlive.tv/api.php?a=bank&u=
 vaughnlive.tv/api.php?a=bank&u=docbrown1
@@ -268,6 +270,95 @@ vaughnlive.tv/api.php?a=background&u=docbrown1
 vaughnlive.tv/api.php?a=live&u=docbrown1
 
 rtmp://live.vaughnlive.tv:443/live @ USTREAM: . ... rtmp://live.vaughnlive.tv:443/live
+
+?? http://vaughnlive.tv/app/loadImg.php?a=thumbnail&u=docbrown1
+
+http://vaughnlive.tv/browse
+http://vaughnlive.tv/browse/misc?a=mvn
+
+http://cdn.vaughnsoft.com/vaughnsoft/vaughn/img_profiles/%s_125.jpg
+http://cdn.vaughnsoft.com/vaughnsoft/vaughnlive/img_backgrounds/%s.jpg
+
+
+
+
+	if len(matches) > 0:
+		#for (url,img,name,genres,status,NoEps,year) in matches:
+		iC=len(matches); USER_AGENT='Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:30.0) Gecko/20100101 Firefox/30.0'; 
+		for (PrefixD,match,img,iTS) in matches: #(img,url,name,genres)
+			labs={}; cMI=[]; is_folder=False; plot=''; name=match.replace('_',' '); labs[u'plot']=plot; LocImgName=''; 
+			#img='http://thumbnails.vaughnsoft.com/0/'+img
+			#img='http://vaughnlive.tv/app/loadImg.php?a=profile&u='+match
+			if len(img)==0: img=iconSite; 
+			elif not '://' in img: img='http://'+img #+"?test"
+			img="http://cdn.vaughnsoft.com/vaughnsoft/vaughn/img_profiles/%s_125.jpg"%match
+			#if '://' in img:
+			#	LocImgName=artp(match+'__'+iTS)
+			#	imgHtml=nURL(img,headers={'Referer':mainSite},compression=True)
+			#	deb('length of imgHtml',str(len(imgHtml))); 
+			#	common._SaveFile(LocImgName,imgHtml)
+			#else: LocImgName=img
+			
+			#img=img+'|%s=%s'%(MyBrowser[0],MyBrowser[1])
+			#img=img+'|%s=%s'%('Referer',Url)
+			#img+='|User-Agent=%s' % (USER_AGENT); 
+			fimg=fanartSite; #deb('img',img); 
+			fimg="http://cdn.vaughnsoft.com/vaughnsoft/vaughnlive/img_backgrounds/%s.jpg"%match
+			##imgHtml=nURL(img,method='get',headers={'Referer':Url}); #debob(['imgHtml',imgHtml])
+			##if len(imgHtml)==0: img=artp('default_channel')
+			#img=mainSite+"/app/loadImg.php?a=profile&u=%s" % match; 
+			#img="http://thumbnails.vaughnsoft.com/1409730190/fetch/live/%s.png" % match
+			##imgData=nURL(img,headers={'Referer':Url}); 
+			##imgN=xbmc.translatePath(os.path.join(common._addonPath,"data4",match+".jpg")); 
+			##common._SaveFile(imgN,imgData); 
+			##img=imgN; 
+			if '://' in PrefixD:
+				url=PrefixD+"%s" % match; urlPage=PrefixD+"%s" % match; 
+				urlEmbedVideo=PrefixD+"embed/video/%s" % match; 
+				urlEmbedChat=PrefixD+"embed/chat/%s" % match; 
+			else: 
+				url=mainSite+"/%s" % match; urlPage=mainSite+"/%s" % match; 
+				urlEmbedVideo=mainSite+"/embed/video/%s" % match; 
+				urlEmbedChat=mainSite+"/embed/chat/%s" % match; 
+			labs[u'title']=cFL(name,colorA); #labs[u'title']=cFL(name+cFL(" ["+cFL(liVe,colorC)+"]",colorB),colorA); 
+			pars={'url':url,'title':name,'fimg':fimg,'img':img,'mode':'PlayLiveStream','channel':match,'site':site,'section':section,'sourcetype':'auto'}; 
+			#if TyPE=='html|user': pars['mode']='ListShows'; pars['page']=''; pars['type']='html'; 
+			Clabs={'title':name,'year':'','url':url,'commonid':'','img':img,'fanart':fimg,'plot':labs[u'plot'],'todoparams':_addon.build_plugin_url(pars),'site':site,'section':section}; 
+			try: cMI=ContextMenu_LiveStreams(Clabs); 
+			except: pass
+			try: debob(['pars',pars,'labs',labs]); 
+			except: pass
+			cMI.append(('Visit Page', 'XBMC.RunPlugin(%s)' % _addon.build_plugin_url({'mode':'BrowseUrl','url':urlPage})))
+			cMI.append(('Visit Video', 'XBMC.RunPlugin(%s)' % _addon.build_plugin_url({'mode':'BrowseUrl','url':urlEmbedVideo})))
+			cMI.append(('Visit Chat', 'XBMC.RunPlugin(%s)' % _addon.build_plugin_url({'mode':'BrowseUrl','url':urlEmbedChat})))
+			#cMI.append(('Play Screenshot', 'XBMC.RunPlugin(%s)' % _addon.build_plugin_url({'mode':'PlayPICTURES','url':img})))
+			#cMI.append(('Play User Avatar', 'XBMC.RunPlugin(%s)' % _addon.build_plugin_url({'mode':'PlayPICTURES','url':'http://vaughnlive.tv/app/loadImg.php?a=profile&u=%s'%match})))
+			##cMI.append(('Play Screenshot', 'XBMC.PlayMedia(%s)'%img))
+			##cMI.append(('Play User Avatar', 'XBMC.PlayMedia(http://vaughnlive.tv/app/loadImg.php?a=profile&u=%s)'%match))
+			
+			#debob(fimg); debob(img); 
+			try: _addon.add_directory(pars,labs,is_folder=is_folder,fanart=fimg,img=img,contextmenu_items=cMI,total_items=iC,context_replace=False)
+			except: pass
+			## ### ## 
+			#if is_folder==False:
+			#	sDB=[]; 
+			#	#'pageurl, title, streamtype, live, thumb, fanart, roomid, roomslug, sourcetype, streamurl, streamkey, 
+			#	#youtubeposition, youtubecurrentindex, youtubeduration, youtubeplaylistcount, youtubevideoid, youtubeuuid, 
+			#	#plot, timestampyear, timestampmonth, timestampday'
+			#	#'"%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s"'
+			#	if url.startswith('/'): url=mainSite2+url
+			#	GroupB=(  urllib.quote_plus(str(url)),urllib.quote_plus(str(name)),urllib.quote_plus(str(liVe)),urllib.quote_plus(str(img)),urllib.quote_plus(str(roomId)),urllib.quote_plus(str(roomSlug)),urllib.quote_plus(str(plot)),str(datetime.date.today().year),str(datetime.date.today().month),str(datetime.date.today().day)  )
+			#	#sDB.append( 'INSERT OR REPLACE INTO channels ('+ps('db channels tags1a')+') VALUES ("%s","%s","%s","%s","%s","%s","%s","%s","%s","%s")' % GroupB )
+			#	sDB.append( 'INSERT INTO channels ('+ps('db channels tags1a')+') VALUES ("%s","%s","%s","%s","%s","%s","%s","%s","%s","%s")' % GroupB )
+			#	debob(sDB); 
+			#	do_database(sDB); 
+			#	#do_database_test(sDB); 
+			## ### ## 
+	#NextPage=str(int(page)+1); 
+	#if (("page="+NextPage) in html) and (not TyPE=='js|featured'):
+	#	_addon.add_directory({'mode':'ListShows','site':site,'url':Url,'page':NextPage,'type':str(TyPE),'idlist':str(ListOfIds),'csrfToken':csrfToken},{'title':cFL('>> Next %s' % cFL(NextPage,colorA),colorB)},is_folder=True,fanart=fanartSite,img=psgn('next'))
+	set_view('tvshows',view_mode=addst('tvshows-view')); eod()
+
 
 
 

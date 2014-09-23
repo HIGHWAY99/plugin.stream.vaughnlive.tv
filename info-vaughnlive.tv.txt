@@ -360,6 +360,90 @@ http://cdn.vaughnsoft.com/vaughnsoft/vaughnlive/img_backgrounds/%s.jpg
 	set_view('tvshows',view_mode=addst('tvshows-view')); eod()
 
 
+		##streamUrl="rtmp://%s/live?%s playpath=live_%s swfUrl=http://vaughnlive.tv/800021294/swf/VaughnSoftPlayer.swf live=1 pageUrl=http://vaughnlive.tv/embed/video/%s?viewers=true&watermark=left&autoplay=true Conn=S:OK --live" % (vidServer,vidHash,Channel,Channel); 
+		#url="rtmp://%s/live? playpath=live_%s swfUrl=http://vaughnlive.tv/800021294/swf/VaughnSoftPlayer.swf live=1 pageUrl=http://vaughnlive.tv/embed/video/%s?viewers=true&watermark=left&autoplay=true Conn=S:OK --live" % (vidServer,Channel,Channel); 
+		TOK=''; #TOK='token=30dabc4871922a1314192e925ab7961d'; 
+		HaSH=''; #HaSH='lkS0dd2dfe8e8aeb3e9fa6d6999a4ddd921'; 
+
+		url="rtmp://%s/live?%s Playpath=%s_%s swfUrl=http://%s/800021294/swf/VaughnSoftPlayer.swf live=%s timeout=%s app=%s pageUrl=http://%s/embed/video/%s?viewers=true&watermark=left&autoplay=true %s Conn=S:OK --live" % (vidServer,HaSH,LiveTag,Channel,SiteDomain,LiveStatus,TimeOut,AppStatus,SiteDomain,Channel,TOK); 
+		##url="rtmp://%s/live?%s playpath=%s_%s swfUrl=http://%s/800021294/swf/VaughnSoftPlayer.swf live=1 timeout=30 pageUrl=http://%s/embed/video/%s?viewers=true&watermark=left&autoplay=true %s Conn=S:OK --live" % (vidServer,HaSH,LiveTag,Channel,SiteDomain,SiteDomain,Channel,TOK); 
+		#if   'vaughn'    in SiteDomain: url="rtmp://%s/live?%s playpath=%s_%s swfUrl=http://%s/800021294/swf/VaughnSoftPlayer.swf live=1 timeout=20 pageUrl=http://%s/embed/video/%s?viewers=true&watermark=left&autoplay=true %s Conn=S:OK --live" % (vidServer,HaSH,LiveTag,Channel,Channel,SiteDomain,SiteDomain,TOK); 
+		#el
+		#if 'instagib.' in SiteDomain: url="rtmp://%s/live?%s playpath=%s_%s live=1 timeout=20" % (vidServer,HaSH,LiveTag,Channel); 
+		#if 'instagib.' in SiteDomain: url="rtmp://%s/live?%s/%s_%s live=1 timeout=20" % (vidServer,HaSH,LiveTag,Channel); 
+		#else: url="rtmp://%s/live?%s/%s_%s live=1 timeout=20" % (vidServer,HaSH,LiveTag,Channel); 
+		
+		#if len(Thumb)==0:
+		#	try:    Thumb=re.compile("flashvars.roomAvatar\s*=\s*'(.+?)';").findall(html)[0]
+		#	except: Thumb=iconSite
+
+		Thumb=iconSite
+		#if len(Name)==0:
+		try:    Name=re.compile('<span id="videoTitle">(.+?)</span>').findall(html)[0]
+		except: Name='Unknown'
+		try: 		fimg='http://'+re.compile('div.theMain { background-image:url\(//(cdn.vaughnsoft.com/vaughnsoft/vaughnlive/background/[0-9A-Za-z]+_[0-9A-Za-z]+_[0-9A-Za-z]+.jpg)\);').findall(html)[0]
+		except: fimg=fanartSite
+		## ### ## 
+		## ### ## 
+	## ### ## 
+	#try: _addon.resolve_url(url)
+	#except: pass
+	#try: play.play(url)
+	#except: pass
+	## ### ## 
+	#pageUrl='',Name='',Thumb='',roomId='',roomSlug='',plot='',liVe='',streamUrl='',streamkey='',youtubekey='',sourcetype='show'
+	debob(",['pars', {'streamurl': '%s', 'roomslug': '%s', 'fimg': '%s', 'img': '%s', 'title': '%s', 'url': '%s', 'type': '%s', 'live': '%s', 'mode': 'PlayStreamUP', 'roomid': '%s', 'sourcetype': '%s'}, " % (str(url),str(roomSlug),str(fimg),str(Thumb),str(Name).replace('[COLOR FFAAAAAA] [[COLOR FF777777]Live[/COLOR]][/COLOR]',''),str(pageUrl),str(addpr('type','')),str(liVe),str(roomId),str(sourcetype))); 
+	
+	# return
+	
+	infoLabels={"Studio":liVe,"Title":'%s [%s]: %s' % (Channel,liVe,Name),"cover_url":Thumb,"background_url":fimg,'plot':plot}; 
+	li=xbmcgui.ListItem(Name,iconImage=Thumb,thumbnailImage=Thumb); 
+	li.setInfo(type="Video", infoLabels=infoLabels ); li.setProperty('IsPlayable', 'true'); 
+	try: _addon.resolve_url(url)
+	except: pass
+	#pL=xbmc.PlayList; pL.add(url,li); pL.add(url,li); pL.add(url,li); pL.add(url,li); pL.add(url,li); pL.add(url,li); pL.add(url,li); pL.add(url,li); pL.add(url,li); pL.add(url,li); play.play(pL); 
+	try: play.play(url,li,False,0)
+	except:
+		try: play.play(url)
+		except: pass
+	##logging().Logger().setLevel(30); 
+	### ### ## 
+
+		#_addon.add_directory(pars,{'title':AFColoring(z)},is_folder=True,fanart=fanartSite,img=psgn('cat '+z.lower())); 
+	#_addon.add_directory({'mode':'BrowseCat','site':site,'cat':'popular','type':'js'},{'title':AFColoring('Popular')},is_folder=True,fanart=fanartSite,img=psgn('popular'))
+	#_addon.add_directory({'mode':'BrowseCat','site':site,'cat':'entertainment','type':'js'},{'title':AFColoring('Entertainment')},is_folder=True,fanart=fanartSite,img=psgn('entertainment'))
+	#_addon.add_directory({'mode':'BrowseCat','site':site,'cat':'gaming','type':'js'},{'title':AFColoring('Gaming')},is_folder=True,fanart=fanartSite,img=psgn('gaming'))
+	#_addon.add_directory({'mode':'BrowseCat','site':site,'cat':'music','type':'js'},{'title':AFColoring('Music')},is_folder=True,fanart=fanartSite,img=psgn('music'))
+	#_addon.add_directory({'mode':'BrowseCat','site':site,'cat':'social','type':'js'},{'title':AFColoring('Social')},is_folder=True,fanart=fanartSite,img=psgn('social'))
+
+		#_addon.add_directory(pars,{'title':AFColoring(z)},is_folder=True,fanart=fanartSite,img=psgn('cat '+z.lower())); 
+	#_addon.add_directory({'mode':'BrowseCat','site':site,'cat':'popular','type':'js'},{'title':AFColoring('Popular')},is_folder=True,fanart=fanartSite,img=psgn('popular'))
+	#_addon.add_directory({'mode':'BrowseCat','site':site,'cat':'entertainment','type':'js'},{'title':AFColoring('Entertainment')},is_folder=True,fanart=fanartSite,img=psgn('entertainment'))
+	#_addon.add_directory({'mode':'BrowseCat','site':site,'cat':'gaming','type':'js'},{'title':AFColoring('Gaming')},is_folder=True,fanart=fanartSite,img=psgn('gaming'))
+	#_addon.add_directory({'mode':'BrowseCat','site':site,'cat':'music','type':'js'},{'title':AFColoring('Music')},is_folder=True,fanart=fanartSite,img=psgn('music'))
+	#_addon.add_directory({'mode':'BrowseCat','site':site,'cat':'social','type':'js'},{'title':AFColoring('Social')},is_folder=True,fanart=fanartSite,img=psgn('social'))
+
+zz=re.compile('<div class="browseTab browseTabAccent(?:Selected)?" id="browseBtn[0-9A-Za-z]+" onclick="Browse\.[0-9A-Za-z]+\(\);"><img src="(/img/cat_.+?_white.png)" class="cat_img"/>\s*(.+?)\s*</div').findall(html.replace('</div>','</div\n\r\a>'))
+
+def ListShows(Url,Page='',TyPE='js',idList='[]',csrfToken='',MeTHoD='re.compile'):
+	#if len(csrfToken)==0: maipageHtml=nURL('http://vaughnlive.tv/',cookie_file=CookFile,load_cookie=False,save_cookie=True); tokenParam='content="(.*?)" name="csrf-token"'; csrfToken=re.compile(tokenParam).findall(maipageHtml)[0]; 
+	## ### ## 
+
+		url="rtmp://%s/live?%s Playpath=%s_%s swfUrl=http://%s/800021294/swf/VaughnSoftPlayer.swf live=%s timeout=%s pageUrl=http://%s/embed/video/%s?viewers=true&watermark=left&autoplay=true %s Conn=S:OK --live" % (vidServer,HaSH,LiveTag,Channel,SiteDomain,LiveStatus,TimeOut,SiteDomain,Channel,TOK); 
+		##url="rtmp://%s/live?%s Playpath=%s_%s swfUrl=http://%s/800021294/swf/VaughnSoftPlayer.swf live=%s timeout=%s app=%s pageUrl=http://%s/embed/video/%s?viewers=true&watermark=left&autoplay=true %s Conn=S:OK --live" % (vidServer,HaSH,LiveTag,Channel,SiteDomain,LiveStatus,TimeOut,AppStatus,SiteDomain,Channel,TOK); 
+		##url="rtmp://%s/live?%s playpath=%s_%s swfUrl=http://%s/800021294/swf/VaughnSoftPlayer.swf live=1 timeout=30 pageUrl=http://%s/embed/video/%s?viewers=true&watermark=left&autoplay=true %s Conn=S:OK --live" % (vidServer,HaSH,LiveTag,Channel,SiteDomain,SiteDomain,Channel,TOK); 
+
+http://cdn.vaughnsoft.com/img/vaughnsoft_logo.png
+http://www.vaughnlive.tv/img/icon_options_white_large.png
+https://cdn.vaughnsoft.com/nophoto.jpg
+https://cdn.vaughnsoft.com/img/pre5.gif
+https://cdn.vaughnsoft.com/img/pre4.gif
+https://cdn.vaughnsoft.com/img/pre3.gif
+https://cdn.vaughnsoft.com/img/pre2.gif
+https://cdn.vaughnsoft.com/img/pre.gif
+https://cdn.vaughnsoft.com/img/im_logo.png
+https://cdn.vaughnsoft.com/img/emoticons/jamming.gif
+
 
 
 

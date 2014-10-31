@@ -260,23 +260,36 @@ def nURL(url,method='get',form_data={},headers={},html='',proxy='',User_Agent=''
 	if len(User_Agent) > 0: net.set_user_agent(User_Agent)
 	else: net.set_user_agent(ps('User-Agent'))
 	if len(proxy) > 9: net.set_proxy(proxy)
-	if (len(cookie_file) > 0) and (load_cookie==True): net.set_cookies(cookie_file)
+	if (len(cookie_file) > 0) and (load_cookie==True): 
+		if isFile(cookie_file)==True:
+			net.set_cookies(cookie_file)
 	if   method.lower()=='get':
 		try: html=net.http_GET(url,headers=headers,compression=compression).content
-		except urllib2.HTTPError,e: debob(['urllib2.HTTPError',e]); html=dhtml
+		except urllib2.HTTPError,e: 
+			debob(['urllib2.HTTPError',e]); 
+			try: debob({'code':e.code,'reason':e.reason,'url':url}); 
+			except: debob({'code':e.code,'reason':e.msg,'url':url}); 
+			html=dhtml
 		except Exception,e: debob(['Exception',e]); html=dhtml
 		except: html=dhtml
 	elif method.lower()=='post':
 		try: html=net.http_POST(url,form_data=form_data,headers=headers,compression=compression).content #,compression=False
-		except urllib2.HTTPError,e: debob(['urllib2.HTTPError',e]); html=dhtml
+		except urllib2.HTTPError,e: 
+			debob(['urllib2.HTTPError',e]); 
+			try: debob({'code':e.code,'reason':e.reason,'url':url}); 
+			except: debob({'code':e.code,'reason':e.msg,'url':url}); 
+			html=dhtml
 		except Exception,e: debob(['Exception',e]); html=dhtml
 		except: html=dhtml
 	elif method.lower()=='head':
 		try: html=net.http_HEAD(url,headers=headers).content
-		except urllib2.HTTPError,e: debob(['urllib2.HTTPError',e]); html=dhtml
+		except urllib2.HTTPError,e: debob(['urllib2.HTTPError',e]); debob({'code':e.code,'reason':e.reason,'url':url}); html=dhtml
 		except Exception,e: debob(['Exception',e]); html=dhtml
 		except: html=dhtml
-	if (len(html) > 0) and (len(cookie_file) > 0) and (save_cookie==True): net.save_cookies(cookie_file)
+	if (len(html) > 0) and (len(cookie_file) > 0) and (save_cookie==True): 
+		Cookie_Path=os.path.join(_datapath,_addon_id)
+		if not isPath(Cookie_Path): os.makedirs(Cookie_Path)
+		net.save_cookies(cookie_file)
 	return html
 def BusyAnimationShow(): 				xbmc.executebuiltin('ActivateWindow(busydialog)')
 def BusyAnimationHide(): 				xbmc.executebuiltin('Dialog.Close(busydialog,true)')

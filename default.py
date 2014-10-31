@@ -230,8 +230,12 @@ def rcPile(strRegex,strSource,intFind='',strDefault=''):
 	except: return strDefault
 def decrypt_vaughnlive(encrypted,retVal="",strDefault=''):
 	try:
-		for val in encrypted.split(':'): retVal+=chr(int(val.replace("0m0",""))/84/5)
-		return retVal
+		if ':' in encrypted:
+			for val in encrypted.split(':'): 
+				#c1=val.replace("0m0",""); c2=int(c1); c3=c2/84; c4=c3/5; retVal+=chr(c4)
+				retVal+=chr(int(val.replace("0m0",""))/84/5)
+			return retVal
+		else: return encrypted.replace("0m0","")
 	except: return strDefault
 def grbPlyrCORE(): ### xbmc.PLAYER_CORE_AUTO | xbmc.PLAYER_CORE_DVDPLAYER | xbmc.PLAYER_CORE_MPLAYER | xbmc.PLAYER_CORE_PAPLAYER
 	PlayerMethod=addst("core-player"); 
@@ -260,20 +264,31 @@ def PlayLiveStream(pageUrl='',Name='',Thumb='',Channel='',roomId='',roomSlug='',
 		liVe=rcPile('vsVars\d+.k1 = "(.+?)";',html,0); debob(['liVe',liVe]); 
 		TimeStampA=rcPile('vsVars\d+.t = "(\d+)";',html,0); debob(['TimeStampA',TimeStampA]); 
 		vidServers=rcPile('(\d+\.\d+\.\d+\.\d+\:443)',html); debob(['vidServers',vidServers]); 
-		vidServer=rcPile('',vidServers,0); 
+		SwfPath=rcPile('swfobject.embedSWF\("(/\d+/swf/[0-9A-Za-z]+\.swf)"',html,0); debob(['SwfPath',SwfPath]); 
+		ServNum=int(addst("server-number"))
+		if ServNum > len(vidServers): ServNum=0-1
+		vidServer=rcPile('',vidServers,ServNum); 
+		#vidServer=rcPile('',vidServers,0); 
 		if len(vidServer)==0: vidServer='live.%s:443'%SiteDomain; 
 		debob(['vidServer',vidServer]); 
 		TOK=''; HaSH=''; 
-		HaSHa=rcPile('vsVars\d\d\d\d\d\d\d\d\d\d\d.[0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z]+\s+=\s+"(.+?)";',html,0); 
-		HaSHb=rcPile(  'vsVars\d\d\d\d\d\d\d\d\d\d.[0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z]+\s+=\s+"(.+?)";',html,0); 
+		HaSHa=rcPile('vsVars\d\d\d\d\d\d\d\d\d\d\d\.[0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z]+\s+=\s+"(.+?)";',html,0); 
+		HaSHb=rcPile(  'vsVars\d\d\d\d\d\d\d\d\d\d\.[0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z]+\s+=\s+"(.+?)";',html,0); 
 		HaSHaa=decrypt_vaughnlive(HaSHa); debob(['HaSHa',HaSHa,HaSHaa]); 
 		HaSHbb=decrypt_vaughnlive(HaSHb); debob(['HaSHb',HaSHb,HaSHbb]); 
 		HaSH=HaSHbb; LiveTag='live'; LiveStatus='true'; TimeOut='30'; AppStatus='live'; 
+		TimeOut=str(addst('DefaultTimeOut','30'))
 		if   'instagib.' in SiteDomain: LiveTag='instagib'
 		elif 'vapers.'   in SiteDomain: LiveTag='vapers'
 		elif 'breakers.' in SiteDomain: LiveTag='breakers'
+		
+		url="rtmp://%s/live?%s Playpath=%s_%s swfUrl=http://%s%s live=%s timeout=%s pageUrl=http://%s/embed/video/%s?viewers=true&watermark=left&autoplay=true %s Conn=S:OK --live" % (vidServer,HaSH,LiveTag,Channel,SiteDomain,SwfPath,LiveStatus,TimeOut,SiteDomain,Channel,TOK); 
+		#url="rtmp://%s/live?%s Playpath=%s_%s swfUrl=http://%s/4241760954/swf/VaughnSoftPlayer.swf live=%s timeout=%s pageUrl=http://%s/embed/video/%s?viewers=true&watermark=left&autoplay=true %s Conn=S:OK --live" % (vidServer,HaSH,LiveTag,Channel,SiteDomain,LiveStatus,TimeOut,SiteDomain,Channel,TOK); 
+		##url="rtmp://%s/live?%s Playpath=%s_%s swfUrl=http://%s/800021294/swf/VaughnSoftPlayer.swf live=%s timeout=%s pageUrl=http://%s/embed/video/%s?viewers=true&watermark=left&autoplay=true %s Conn=S:OK --live" % (vidServer,HaSH,LiveTag,Channel,SiteDomain,LiveStatus,TimeOut,SiteDomain,Channel,TOK); 
+		##url="rtmp://%s/live?%s Playpath=%s_%s swfUrl=http://%s/800021294/swf/VaughnSoftPlayer.swf live=%s timeout=%s pageUrl=http://%s/embed/video/%s?viewers=true&watermark=left&autoplay=true %s" % (vidServer,HaSH,LiveTag,Channel,SiteDomain,LiveStatus,TimeOut,SiteDomain,Channel,TOK); 
+		##url="rtmp://%s/%s/_definst_/%s.> live=%s timeout=%s" % (vidServer,LiveTag,Channel,LiveStatus,TimeOut); 
+		##url="rtmp://%s/%s/_definst_/%s live=%s timeout=%s %s Conn=S:OK --live" % (vidServer,LiveTag,Channel,LiveStatus,TimeOut,TOK); 
 		##url="rtmp://%s/live?%s Playpath=%s_%s swfUrl=http://%s/800021294/swf/VaughnSoftPlayer.swf live=%s timeout=%s pageUrl=http://%s/embed/video/%s?viewers=true&watermark=left&autoplay=true %s %s Conn=S:OK --live" % (vidServer,HaSH,LiveTag,Channel,SiteDomain,LiveStatus,TimeOut,SiteDomain,Channel,TOK,'fps=25'); 
-		url="rtmp://%s/live?%s Playpath=%s_%s swfUrl=http://%s/800021294/swf/VaughnSoftPlayer.swf live=%s timeout=%s pageUrl=http://%s/embed/video/%s?viewers=true&watermark=left&autoplay=true %s Conn=S:OK --live" % (vidServer,HaSH,LiveTag,Channel,SiteDomain,LiveStatus,TimeOut,SiteDomain,Channel,TOK); 
 		##url="rtmp://%s/live?%s Playpath=%s_%s swfUrl=http://%s/800021294/swf/VaughnSoftPlayer.swf live=%s timeout=%s app=%s pageUrl=http://%s/embed/video/%s?viewers=true&watermark=left&autoplay=true %s Conn=S:OK --live" % (vidServer,HaSH,LiveTag,Channel,SiteDomain,LiveStatus,TimeOut,AppStatus,SiteDomain,Channel,TOK); 
 		##url="rtmp://%s/live?%s playpath=%s_%s swfUrl=http://%s/800021294/swf/VaughnSoftPlayer.swf live=1 timeout=30 pageUrl=http://%s/embed/video/%s?viewers=true&watermark=left&autoplay=true %s Conn=S:OK --live" % (vidServer,HaSH,LiveTag,Channel,SiteDomain,SiteDomain,Channel,TOK); 
 		## ### ## 
@@ -351,11 +366,13 @@ def MenuListChannels(Url,Page='',TyPE='js',idList='[]',csrfToken='',MeTHoD='re.c
 	debob(['Url',Url,'TyPE',TyPE])
 	if len(Url)==0: debob("No url found."); eod(); return
 	if (not mainSite in Url) and (not mainSite2 in Url) and (not mainSite3 in Url) and (not mainSite4 in Url): Url=mainSite+Url
-	deb('Url',Url); html=messupText(nolines(nURL(Url,headers={'Referer':mainSite})),True,True); deb('length of html',str(len(html))); #debob(html); 
+	deb('Url',Url); html=messupText(nolines(nURL(Url,headers={'Referer':mainSite},cookie_file=CookFile,load_cookie=True)),True,True); deb('length of html',str(len(html))); #debob(html); 
 	if len(html)==0: debob("No html found."); eod(); return
 	## ### ## 
 	if   (mainSite+"/app/topbar.php?s=") in Url: s='<div\s+class="topbar_img">\s*<a\s+href="(\D+://(?:www.)?(?:/|vapers.tv/|breakers.tv/|vaughnlive.tv/|instagib.tv/)?)(.*?)"\s*>(())\s*<img\s+name="mvnPicTopBar_.*?"\s+width="\d*"\s+height="\d*" border="\d*"\s+onerror="mvnImages.profileError\(\'mvnPicTopBar_[0-9A-Za-z_\-]+\',\'[0-9A-Za-z_\-]+\'\);"\s+class="[0-9A-Za-z_\-]*"\s+alt="[0-9A-Za-z_\-]+(?: - \D+.)?"\s+title="[0-9A-Za-z_\-]+(?: - \D+.)?"\s*/>\s*</a>\s*</div'; #MeTHoD='split'
-	elif (mainSite+"/browse/") in Url: s='<a href="((?:http://)?(?:/|vapers.tv/|breakers.tv/|vaughnlive.tv/|instagib.tv/)?)(.+?)" target="_top"><img src="//(thumbnails.vaughnsoft.com/(\d+)/fetch/\D+/.+?.png)" class"browseThumb" width="\d*" height="\d*"\s*/></a>'; 
+	elif (mainSite+"/browse/") in Url: 
+		s='<a href="((?:http://)?(?:/|vapers.tv/|breakers.tv/|vaughnlive.tv/|instagib.tv/)?)(.+?)" target="_top"><img src="//(thumbnails.vaughnsoft.com/(\d+)/fetch/\D+/.+?.png)" class"browseThumb" width="\d*" height="\d*"\s*/></a>'; 
+		
 	else: return
 	html=html.replace('</div>','</div\n\r\a>'); #debob(html); 
 	if (MeTHoD=='split') and ('</MVN>' in html):
@@ -375,8 +392,8 @@ def MenuListChannels(Url,Page='',TyPE='js',idList='[]',csrfToken='',MeTHoD='re.c
 				labs={}; cMI=[]; is_folder=False; plot=''; name=match.replace('_',' '); labs[u'plot']=plot; LocImgName=''; 
 				img=getThumb(match,FetchLoc='live',TimeStamp=iTS)
 				fimg=getBg(match)
-				if '://' in PrefixD:url=PrefixD+"%s" % match; urlPage=PrefixD+"%s" % match; urlEmbedVideo=PrefixD+"embed/video/%s" % match; urlEmbedChat=PrefixD+"embed/chat/%s" % match; 
-				else: url=mainSite+"/%s" % match; urlPage=mainSite+"/%s" % match; urlEmbedVideo=mainSite+"/embed/video/%s" % match; urlEmbedChat=mainSite+"/embed/chat/%s" % match; 
+				if '://' in PrefixD:url=PrefixD+"%s"%match; urlPage=PrefixD+"%s" % match; urlEmbedVideo=PrefixD+"embed/video/%s"%match; urlEmbedChat=PrefixD+"embed/chat/%s"%match; 
+				else: url=mainSite+"/%s"%match; urlPage=mainSite+"/%s" % match; urlEmbedVideo=mainSite+"/embed/video/%s"%match; urlEmbedChat=mainSite+"/embed/chat/%s"%match; 
 				labs[u'title']=cFL(name,colorA); #labs[u'title']=cFL(name+cFL(" ["+cFL(liVe,colorC)+"]",colorB),colorA); 
 				pars={'url':url,'title':name,'fimg':fimg,'img':img,'mode':'PlayLiveStream','channel':match,'site':site,'section':section,'sourcetype':'auto'}; 
 				Clabs={'title':name,'year':'','url':url,'commonid':'','img':img,'fanart':fimg,'plot':labs[u'plot'],'todoparams':_addon.build_plugin_url(pars),'site':site,'section':section}; 
@@ -384,9 +401,9 @@ def MenuListChannels(Url,Page='',TyPE='js',idList='[]',csrfToken='',MeTHoD='re.c
 				except: pass
 				try: debob(['pars',pars,'labs',labs]); 
 				except: pass
-				cMI.append(('Visit Page', 'XBMC.RunPlugin(%s)' % _addon.build_plugin_url({'mode':'BrowseUrl','url':urlPage})))
-				cMI.append(('Visit Video', 'XBMC.RunPlugin(%s)' % _addon.build_plugin_url({'mode':'BrowseUrl','url':urlEmbedVideo})))
-				cMI.append(('Visit Chat', 'XBMC.RunPlugin(%s)' % _addon.build_plugin_url({'mode':'BrowseUrl','url':urlEmbedChat})))
+				cMI.append(('Visit Page', 'XBMC.RunPlugin(%s)'%_addon.build_plugin_url({'mode':'BrowseUrl','url':urlPage})))
+				cMI.append(('Visit Video','XBMC.RunPlugin(%s)'%_addon.build_plugin_url({'mode':'BrowseUrl','url':urlEmbedVideo})))
+				cMI.append(('Visit Chat', 'XBMC.RunPlugin(%s)'%_addon.build_plugin_url({'mode':'BrowseUrl','url':urlEmbedChat})))
 				try: _addon.add_directory(pars,labs,is_folder=is_folder,fanart=fimg,img=img,contextmenu_items=cMI,total_items=iC,context_replace=False)
 				except: pass
 		elif MeTHoD=='split':
@@ -406,9 +423,9 @@ def MenuListChannels(Url,Page='',TyPE='js',idList='[]',csrfToken='',MeTHoD='re.c
 					except: pass
 					try: debob(['pars',pars,'labs',labs]); 
 					except: pass
-					cMI.append(('Visit Page', 'XBMC.RunPlugin(%s)' % _addon.build_plugin_url({'mode':'BrowseUrl','url':urlPage})))
-					cMI.append(('Visit Video', 'XBMC.RunPlugin(%s)' % _addon.build_plugin_url({'mode':'BrowseUrl','url':urlEmbedVideo})))
-					cMI.append(('Visit Chat', 'XBMC.RunPlugin(%s)' % _addon.build_plugin_url({'mode':'BrowseUrl','url':urlEmbedChat})))
+					cMI.append(('Visit Page', 'XBMC.RunPlugin(%s)'%_addon.build_plugin_url({'mode':'BrowseUrl','url':urlPage})))
+					cMI.append(('Visit Video','XBMC.RunPlugin(%s)'%_addon.build_plugin_url({'mode':'BrowseUrl','url':urlEmbedVideo})))
+					cMI.append(('Visit Chat', 'XBMC.RunPlugin(%s)'%_addon.build_plugin_url({'mode':'BrowseUrl','url':urlEmbedChat})))
 					try: _addon.add_directory(pars,labs,is_folder=is_folder,fanart=fimg,img=img,contextmenu_items=cMI,total_items=iC,context_replace=False)
 					except: pass
 	#		## ### ## 
@@ -557,6 +574,10 @@ def MenuSection():
 	##import splash_highway as splash; #splash.do_My_Splash(_addon.get_fanart(),2,False); 
 	##splash.do_My_Splash(HowLong=5,resize=False); 
 	SpecialCODE=addst('special-code',''); LocalLists=[]; 
+	
+	try: nURL(mainSite,cookie_file=CookFile,save_cookie=True)
+	except: deb("Error","Couldn't save cookie file."); pass
+	
 	_addon.add_directory({'mode':'MenuTopBar','site':site},{'title':AFColoring('Top Bar')},is_folder=True,fanart=fanartSite,img=psgn('topbar'))
 	_addon.add_directory({'mode':'MenuBrowse','site':site},{'title':AFColoring('Browse')},is_folder=True,fanart=fanartSite,img=psgn('browse'))
 	

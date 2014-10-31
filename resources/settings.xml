@@ -1,6 +1,8 @@
 <settings>
 	<category label="General">
 		<setting visible="true" id="special-code" type="text" label="Special Code:" default="" />
+		<setting visible="true" id="server-number"    type="labelenum" label="Server Number" values="0|1|2|3|4|5|6|7|8|9|10"             default="0"/>
+		<setting visible="true" id="DefaultTimeOut" type="labelenum" label="Default Play Time-out" values="0|5|10|15|20|25|30|35|40|45|50|55|60|65|70" default="30"/>
 		<setting visible="true" id="thumbnail-type" type="bool" label="Thumbnail Type: Screenshot" default="false" />
 		<setting visible="true" id="sort-by-name" type="bool" label="Sort Type: By Channel Name" default="false" />
 		<setting visible="true" id="core-player" type="labelenum" label="Player Core" values="AUTO|DVDPLAYER|MPLAYER|PAPLAYER"             default="AUTO"/>

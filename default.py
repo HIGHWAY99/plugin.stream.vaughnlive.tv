@@ -108,8 +108,10 @@ def psgn(x,t=".png"):
 			,'img_prev':									artp('browse_prev') #d #'http://kissanime.com/Content/images/previous.png'
 			,'next':											artp('browse_next') #d #'http://kissanime.com/Content/images/next.png'
 			,'prev':											artp('browse_prev') #d #'http://kissanime.com/Content/images/previous.png'
-			,'browse':										d #artp('browse')
-			,'topbar':										d #artp('browse')
+			,'browse':										artj('Browse') #d #artp('browse')
+			,'topbar':										artj('Top_Bar') #d #artp('browse')
+			,'about': 										artj('About') #s+"8BLYGft"+t
+			,'all': 											artj('All') #d #s+"hrWVT21"+t
 			,'a': 		s+"OvFHLK2"+t
 			,'b': 		s+"ezem9mn"+t
 			,'c': 		s+"707ILz1"+t
@@ -137,7 +139,6 @@ def psgn(x,t=".png"):
 			,'y': 		s+"46IlmRH"+t
 			,'z': 		s+"PWUSCsE"+t
 			,'0': 		s+"7an2n4W"+t # 0RJOmkw
-			,'all': 	d #s+"hrWVT21"+t
 			#,'search': 										s+"mDSHRJX"+t
 			,'plugin settings': 					d #s+"K4OuZcD"+t
 			,'local change log': 					d #s+"f1nvgAM"+t
@@ -163,7 +164,6 @@ def psgn(x,t=".png"):
 			,'genre select': 							d #s+"MhNenb6"+t
 #			,'': 								s+""+t
 #			,'': 								s+""+t
-			,'about': 										s+"8BLYGft"+t
 			,'alphabetical': 							d #s+"aLKvpQD"+t
 			,'favorites': 								d #s+"mVxogXL"+t #
 			,'favorites 1': 							d #s+"cyDyVuh"+t #
@@ -560,10 +560,14 @@ def MenusBrowser(Url='/browse',zz=[],NewMode='BrowseCat3'):
 	#zz=MenuBrowse_FetchCats(Url)
 	zz.append("Misc"); zz.append("People"); zz.append("Nature"); zz.append("Creative"); zz.append("Music Cafe"); zz.append("News & Tech"); zz.append("Lifestyles"); zz.append("Espanol"); 
 	#zz.append("Vapers"); zz.append("Breakers"); zz.append("Gamers"); 
-	_addon.add_directory({'mode':NewMode,'site':site,'cat':'','type':'php'},{'title':AFColoring('All')},is_folder=True,fanart=fanartSite,img=(mainSite+'/img/cat_all_white.png'))
+	#_addon.add_directory({'mode':NewMode,'site':site,'cat':'','type':'php'},{'title':AFColoring('All')},is_folder=True,fanart=fanartSite,img=(mainSite+'/img/cat_all_white.png'))
+	_addon.add_directory({'mode':NewMode,'site':site,'cat':'','type':'php'},{'title':AFColoring('All')},is_folder=True,fanart=fanartSite,img=artj('All'))
 	for z in zz: 
-		nonTitle=z.lower().replace(' ','').replace('&',''); catName=nonTitle.replace('musiccafe3','music_cafe').replace('newstech','news_tech'); pars={'mode':'BrowseCat3','site':site,'cat':catName,'type':'php'}; 
+		nonTitle=z.lower().replace(' ','').replace('&',''); 
+		catName=nonTitle.replace('musiccafe3','music_cafe').replace('newstech','news_tech'); 
+		pars={'mode':'BrowseCat3','site':site,'cat':catName,'type':'php'}; 
 		img=(mainSite+'/img/cat_%s_white.png'%nonTitle.replace('musiccafe','music')); #img=(mainSite+'/img/cat_%s.png' % nonTitle)
+		img=artj(nonTitle)
 		_addon.add_directory(pars,{'title':AFColoring(z)},is_folder=True,fanart=fanartSite,img=img); #img=psgn('cat '+z.lower())); 
 	set_view('list',view_mode=addst('default-view')); eod()
 def MenuBrowse(Url='/browse',zz=[],NewMode='BrowseCat3'): MenusBrowser(Url,zz,NewMode)
@@ -620,7 +624,7 @@ def MenuSection():
 	#	title=AFColoring(addst("LastEpisodeListedNAME"))+CR+cFL('[Last Episode]',colorA); 
 	#	_addon.add_directory(pars,{'title':title},fanart=addst("LastEpisodeListedFANART"),img=addst("LastEpisodeListedIMG"),is_folder=True); 
 	###
-	_addon.add_directory({'mode':'About','site':site,'section':section},{'title':AFColoring('About')},is_folder=True,fanart=fanartSite,img='http://i.imgur.com/0h78x5V.png') # iconSite
+	_addon.add_directory({'mode':'About','site':site,'section':section},{'title':AFColoring('About')},is_folder=True,fanart=fanartSite,img=artj('About')) # 'http://i.imgur.com/0h78x5V.png' # iconSite
 	###
 	set_view('list',view_mode=addst('default-view')); eod()
 ### ############################################################################################################

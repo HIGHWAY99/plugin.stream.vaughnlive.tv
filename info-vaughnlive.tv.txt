@@ -445,6 +445,155 @@ https://cdn.vaughnsoft.com/img/im_logo.png
 https://cdn.vaughnsoft.com/img/emoticons/jamming.gif
 
 
+http://pastebin.com/iADHs7rJ
+"name": "Discovery Channel",
+"image": "http://img1.wikia.nocookie.net/__cb20121230042537/doblaje/es/images/7/7d/Logo-discovery-channel.jpg",
+"url": "http://vaughnlive.tv/embed/video/discomar?viewers=true&watermark=left&autoplay=true",
+"isHost": "true"
+
+
+
+
+rtmp://live.vaughnsoft.net:443/live					Primary
+rtmp://live-iad.vaughnsoft.net:443/live			Virginia, USA
+rtmp://live-nyc.vaughnsoft.net:443/live			New York, USA
+rtmp://live-nyc2.vaughnsoft.net:443/live		New York #2, USA
+rtmp://live-nl.vaughnsoft.net:443/live			Netherlands, Amsterdam
+rtmp://live-de.vaughnsoft.net:443/live			Frankfurt, Germany
+
+
+
+http://cdn.vaughnsoft.com/img/billboards/1389903113-e1817bad33dc45fdfe10ffee813825c0-1389903113.jpg
+http://cdn.vaughnsoft.com/img/billboards/1383608779-2b44d11657fdca233e2cfbf674624f98-1383608779.jpg
+http://cdn.vaughnsoft.com/img/im_logo.png
+http://cdn.vaughnsoft.com/vaughnsoft/vaughnlive/background/88af179dfd5f5ff6fa18112de425ae1a_0881e55dde1fe2bf8ca6e64e6af432b5_eb18230b3396751603629919d5dbdbe7.jpg
+http://thumbnails.vaughnsoft.com/1409730190/fetch/live/finnhorror.png
+
+
+
+
+
+
+/4241760954/swf/VaughnSoftPlayer.swf
+
+
+
+                  <script type="text/javascript">
+        function getEdgeServers() { return "23.227.170.34:443,192.240.105.42:443,50.7.78.138:443,192.240.105.2:443,23.227.170.74:443,50.7.78.50:443,23.227.170.82:443"; }
+        var vsVars1413950186 = {};
+        var vsVars14139501864 = {};
+        vsVars1413950186.k1 = "live";
+        vsVars1413950186.k2 = "cygnicrux";
+                                vsVars1413950186.k6 = 0;
+                vsVars14139501864.rXt0224c0552dbccfc3b773c83cf1228285 = "0m0EeQsc1OPAeg7PXidXS8E3zhGSlZYNKFH";
+        vsVars1413950186.rXt0224c0552dbccfc3b773c83cf1228285 = "0m0EeQsc1OPAeg7PXidXS8E3zhGSlZYNKFH"; 
+        vsVars1413950186.t = "1413950186";
+        var params = {};
+        params.wmode = "transparent";
+        params.bgcolor = "#000";
+        params.allowfullscreen = "true";
+        params.allowscriptaccess = "always";
+        params.allownetworking = "all";
+        var attributes = {};
+        attributes.id = "vsPlayer";
+        swfobject.embedSWF("/4241760954/swf/VaughnSoftPlayer.swf", "MvnPlayerContainer", "720", "431", "9.0.0", "/swf/expressInstall.swf", vsVars1413950186, params, attributes);
+      </script>
+
+
+this.mvnNetStream2.play(this.streamNet + "ch_" + this.streamChan);
+
+var _loc1_:Date = new Date();
+var _loc2_:String = _loc1_.milliseconds.toString() + "-" + _loc1_.millisecondsUTC.toString() + "-" + Math.random();
+var _loc3_:* = "http://" + this.MvnVaughnSoftUrl + "/video/edge/" + this.streamNet + "_" + this.streamChan + "_" + _loc2_;
+
+this.mvnNetConnection.connect("rtmp://" + this.currentVideoServer + "/live?" + this.sv2);
+
+http://
+	this.MvnVaughnSoftUrl
+/video/edge/
+	this.streamNet
+_
+	this.streamChan
+_
+	_loc2_
+
+# k1 streamNet
+vsVars1413950186.k1 = "live";
+# k2 streamChan
+vsVars1413950186.k2 = "cygnicrux";
+# k3 streamPort
+# k4 streamServer
+# k5 streamFrontPage
+# k6 streamViewers
+# k7 streamSizing
+# k8 streamIsPeopleTab
+# sk1 streamKey1
+# sk2 streamKey2
+# sk3 streamKey3
+# sv1 1024
+# setGeoCOde 5
+
+this.streamNet = "live";
+this.MvnVaughnSoftUrl = "mvn.vaughnsoft.net";
+
+this.adUrl_vl = "http://vast.yashi.com/3183?vid_id=" + this.streamNet + "_" + this.streamChan + "&vid_title=" + this.streamChan;
+
+         this.val_MvnCaster_cam = "1";
+         this.val_MvnCaster_mic = 0;
+         this.val_MvnCaster_bitrate = 1500;
+         this.val_MvnCaster_quality = 70;
+         this.val_MvnCaster_width = 640;
+         this.val_MvnCaster_height = 360;
+         this.val_MvnCaster_fps = 30;
+         this.val_MvnCaster_audioCodec = "Nellymoser";
+         this.val_MvnCaster_videoCodec = "VP6 [Medium] 16:9";
+         this.val_MvnCaster_isBroadcast = false;
+
+         this.arrQual_MvnCaster[0] = "16:9 Low";
+         this.arrQual_MvnCaster[1] = "16:9 Medium";
+         this.arrQual_MvnCaster[2] = "16:9 High";
+         this.arrQual_MvnCaster[3] = "4:3 Low";
+         this.arrQual_MvnCaster[4] = "4:3 Medium";
+         this.arrQual_MvnCaster[5] = "4:3 High";
+
+this.domainArr = ["localhost","vaughnlive.tv","instagib.tv","igb.tv","breakers.tv","vaug.hn","vaughnsoft.net","vaughnsoft.com","kickpass.tv","mvn.tv","vapers.tv","facebook.com","fbsbx.com"];
+
+navigateToURL(new URLRequest("http://" + this.theDomain + "/" + this.streamChan.replace("btv_","").replace("live_","").replace("instagib_","")),"_top");
+
+      public function processAdUrl3(param1:Event) : void
+      {
+         this.theAdUrl = this.MvnSplit("<MediaFile ","</MediaFile>",param1.target.data);
+         this.theAdUrl = this.MvnSplit("<![CDATA[","]]>",this.theAdUrl);
+         if(this.endsWith(this.theDomain,"vaughnlive.tv"))
+         {
+            this.theAdUrl = this.theAdUrl + ("&LR_URL=http://vaughnlive.tv/" + this.streamChan + "&LR_ADMAP=in::0");
+         }
+         else if(this.endsWith(this.theDomain,"breakers.tv"))
+         {
+            this.theAdUrl = this.theAdUrl + ("&LR_URL=http://vaughnlive.tv/" + this.streamChan + "&LR_ADMAP=in::0");
+         }
+         else if(this.endsWith(this.theDomain,"vapers.tv"))
+         {
+            this.theAdUrl = this.theAdUrl + ("&LR_URL=http://vapers.tv/" + this.streamChan + "&LR_ADMAP=in::0");
+         }
+         else if(this.endsWith(this.theDomain,"instagib.tv"))
+         {
+            this.theAdUrl = this.theAdUrl + ("&LR_URL=http://instagib.tv/" + this.streamChan + "&LR_ADMAP=in::0");
+         }
+         else
+         {
+            this.theAdUrl = this.theAdUrl + ("&LR_URL=http://vaughnlive.tv/" + this.streamChan + "&LR_ADMAP=in::0");
+         }
+
+this.mvnNetConnection.connect("rtmp://" + this.currentVideoServer + "/live?" + this.sv2);
+
+
+
+
+
+
+
+
 
 
 

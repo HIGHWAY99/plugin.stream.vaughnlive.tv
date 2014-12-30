@@ -8,15 +8,16 @@
 ### ############################################################################################################
 ### Imports ###
 import xbmc
-import os,sys,string,StringIO,logging,random,array,time,datetime,re
+import os,sys,string,StringIO,logging,random,array,time,datetime,re,shutil
 try: import copy
 except: pass
 import urllib,urllib2,xbmcaddon,xbmcplugin,xbmcgui
 import common as common
 from common import *
-from common import (_addon,_artIcon,_artFanart,_addonPath)
+from common import (_addon,_artIcon,_artFanart,_addonPath,_thumbArtPath)
 ### ############################################################################################################
 ### ############################################################################################################
+print sys.argv
 SiteName=ps('__plugin__'); SiteTag=ps('__plugin__').replace(' ',''); 
 #mainSite=addst("site-domain")
 #mainSite2='http://www.'+(mainSite.replace('http://',''))
@@ -388,10 +389,24 @@ def MenuListChannels(Url,Page='',TyPE='js',idList='[]',csrfToken='',MeTHoD='re.c
 		iC=len(matches); 
 		if MeTHoD=='re.compile':
 			if tfalse(addst('sort-by-name'))==True: matches=sorted(matches,key=lambda i: i[1],reverse=False)
+			try:
+			#	os.remove(_thumbArtPath)
+				if isPath(_thumbArtPath)==True:
+					shutil.rmtree(_thumbArtPath)
+			except: pass
 			for (PrefixD,match,img,iTS) in matches: #(img,url,name,genres)
 				labs={}; cMI=[]; is_folder=False; plot=''; name=match.replace('_',' '); labs[u'plot']=plot; LocImgName=''; 
 				img=getThumb(match,FetchLoc='live',TimeStamp=iTS)
 				fimg=getBg(match)
+				#debob({'img':img,'fimg':fimg})
+				if tfalse(addst('thumbnail-type'))==True:
+						ThumbFile=match+'.png'
+						DownloadThisSilently(img,ThumbFile,_thumbArtPath,useResolver=False)
+						ThumbFileWithPath=thumbart(ThumbFile)
+						if os.path.isfile(ThumbFileWithPath)==True:
+							img=''+ThumbFileWithPath
+							unCacheAnImage(img)
+				#unCacheAnImage(img)
 				if '://' in PrefixD:url=PrefixD+"%s"%match; urlPage=PrefixD+"%s" % match; urlEmbedVideo=PrefixD+"embed/video/%s"%match; urlEmbedChat=PrefixD+"embed/chat/%s"%match; 
 				else: url=mainSite+"/%s"%match; urlPage=mainSite+"/%s" % match; urlEmbedVideo=mainSite+"/embed/video/%s"%match; urlEmbedChat=mainSite+"/embed/chat/%s"%match; 
 				labs[u'title']=cFL(name,colorA); #labs[u'title']=cFL(name+cFL(" ["+cFL(liVe,colorC)+"]",colorB),colorA); 

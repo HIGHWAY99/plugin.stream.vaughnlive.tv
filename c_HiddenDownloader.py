@@ -6,34 +6,25 @@
 ### ############################################################################################################
 ### ############################################################################################################
 ### Imports ###
-from common import *
-from common import (_addon,_artIcon,_artFanart,_addonPath,_OpenFile)
+#from common import *
+#from common import (_addon,_artIcon,_artFanart,_addonPath,_OpenFile)
+import os,xbmc
+def isPath(path): return os.path.exists(path)
+def isFile(filename): return os.path.isfile(filename)
 def download(url,destfile,destpath,useResolver=True):
 	import urllib
-	#import xbmcgui
-	dp='' #dp=xbmcgui.DialogProgress()
-	##try: _addon.resolve_url(url)
-	##except: pass
-	#if useResolver==True:
-	#	try: link=urlresolver.HostedMediaFile(url).resolve()
-	#	except: link=url
-	#else: link=url
-	link=url
-	if isPath(destpath)==False: os.mkdir(destPath)
+	dp=''; link=url
+	if isPath(destpath)==False: os.mkdir(destpath)
 	myNote('Starting Download',destfile,100)
-	urllib.urlretrieve(link, xbmc.translatePath(os.path.join(destpath,destfile)),lambda nb, bs, fs, url=url: _pbhook(nb,bs,fs,url,dp))
-	#urllib.urlretrieve(link, xbmc.translatePath(os.path.join(destpath,destfile)), lambda nb, bs, fs: DownloadStatus(nb, bs, fs, dp, download_method, start_time, section, url, img, LabelName, ext, LabelFile))
+	urllib.urlretrieve(link,xbmc.translatePath(os.path.join(destpath,destfile)),lambda nb, bs, fs, url=url: _pbhook(nb,bs,fs,url,dp))
 	myNote('Download Complete',destfile,15000)
-	#try: _addon.resolve_url(url)
-	#except: pass
-def _pbhook(numblocks, blocksize, filesize, url, dp):
+def _pbhook(numblocks,blocksize,filesize,url,dp):
 	try:
-		percent = min((numblocks*blocksize*100)/filesize, 100)
-		#dp.update(percent)
+		percent=min((numblocks*blocksize*100)/filesize,100)
 	except:
-		percent = 100
-		#dp.update(percent)
-	#if dp.iscanceled(): 
-	#	raise Exception("Canceled")
-	#	dp.close()
-	#
+		percent=100
+def downloadSilent(url,destfile,destpath,useResolver=True):
+	import urllib
+	dp=''; link=url
+	if isPath(destpath)==False: os.mkdir(destpath)
+	urllib.urlretrieve(link,xbmc.translatePath(os.path.join(destpath,destfile)),lambda nb,bs,fs,url=url:_pbhook(nb,bs,fs,url,dp))

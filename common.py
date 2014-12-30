@@ -61,6 +61,7 @@ except: pass
 _domain_url=ps('_domain_url'); _du=ps('_domain_url'); 
 _addonPath	=xbmc.translatePath(_plugin.getAddonInfo('path'))
 _artPath		=xbmc.translatePath(os.path.join(_addonPath,ps('_addon_path_art')))
+_thumbArtPath=xbmc.translatePath(os.path.join(_addonPath,'thumbs'))
 _datapath 	=xbmc.translatePath(_addon.get_profile()); 
 _artIcon		=_addon.get_icon(); 
 _artFanart	=_addon.get_fanart(); 
@@ -82,6 +83,9 @@ def tfalse_old(r,d=False): ## Get True / False
 def art(f,fe=''): return xbmc.translatePath(os.path.join(_artPath,f+fe)) ### for Making path+filename+ext data for Art Images. ###
 def artp(f,fe='.png'): return art(f,fe)
 def artj(f,fe='.jpg'): return art(f,fe)
+def thumbart(f,fe=''): return xbmc.translatePath(os.path.join(_thumbArtPath,f+fe)) ### for Making path+filename+ext data for Art Images. ###
+def thumbartp(f,fe='.png'): return thumbart(f,fe)
+def thumbartj(f,fe='.jpg'): return thumbart(f,fe)
 ##### Settings #####
 _setting={}; 
 _setting['enableMeta']	=	_enableMeta			=tfalse(addst("enableMeta"))
@@ -941,6 +945,19 @@ def DownloadThis(url,destfile,destpath,useResolver=True):
 	downloader.download(link,destfile,destpath,useResolver)
 	#downloader.download(url,destfile,destpath,useResolver)
 
+def DownloadThisSilently(url,destfile,destpath,useResolver=True):
+	destpath=xbmc.translatePath(destpath)
+	import c_HiddenDownloader as downloader
+	#debob(str(useResolver))
+	if useResolver==True:
+		try: 
+			import urlresolver
+			#debob(urlresolver.HostedMediaFile(url))
+			link=urlresolver.HostedMediaFile(url).resolve()
+		except: link=url
+	else: link=url
+	#deb('downloadable url',link)
+	downloader.downloadSilent(link,destfile,destpath,useResolver)
 
 ### ############################################################################################################
 ### ############################################################################################################
@@ -1362,7 +1379,22 @@ def get_database_1st_s(CoMMaND):
 ##### /\
 ### ############################################################################################################
 ### ############################################################################################################
-
+try:
+	try: from sqlite3 import dbapi2 as ormImgCache
+	except: from pysqlite2 import dbapi2 as ormImgCache
+	ImgCacheDB='sqlite'; ImgCacheDBDIR=os.path.join(xbmc.translatePath("special://database"),'Textures13.db'); 
+	if os.path.isfile(ImgCacheDBDIR)==True:  ImgCacheDBDIRFound=True #print "Texture Database Found: "+ImgCacheDBDIR; 
+	else: ImgCacheDBDIRFound=False #print "Unable to locate Texture Database"
+except: ImgCacheDBDIRFound=False
+def unCacheAnImage(url):
+	if (ImgCacheDBDIRFound==True):
+		if (len(str(url)) > 0) and (os.path.isfile(ImgCacheDBDIR)==True): 
+			try:
+				dbImgCache=ormImgCache.connect(ImgCacheDBDIR); 
+				s='DELETE FROM texture WHERE url = "%s";'%str(url); #print s; 
+				dbImgCache.execute(s); 
+				dbImgCache.commit(); dbImgCache.close(); 
+			except: pass
 
 
 ### ############################################################################################################

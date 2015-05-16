@@ -236,7 +236,7 @@ def decrypt_vaughnlive(encrypted,retVal="",strDefault=''):
 				#c1=val.replace("0m0",""); c2=int(c1); c3=c2/84; c4=c3/5; retVal+=chr(c4)
 				retVal+=chr(int(val.replace("0m0",""))/84/5)
 			return retVal
-		else: return encrypted.replace("0m0","")
+		else: return encrypted.replace("0m0","").replace("0n0","")
 	except: return strDefault
 def grbPlyrCORE(): ### xbmc.PLAYER_CORE_AUTO | xbmc.PLAYER_CORE_DVDPLAYER | xbmc.PLAYER_CORE_MPLAYER | xbmc.PLAYER_CORE_PAPLAYER
 	PlayerMethod=addst("core-player"); 
